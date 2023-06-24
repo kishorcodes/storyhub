@@ -4,13 +4,13 @@ import penguinTyping from "../assets/images/penguin-typing.gif";
 import Footer from "../components/Footer";
 import LatestStories from "./LatestStories";
 import Reccomended from "../components/Reccomended";
-const Home = () => {
+const Home = ({auth}) => {
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar auth={auth}></Navbar>
       <div className="border-b border-black bg-yellow-400 h-[500px] flex flex-col md:flex-row justify-between md:pl-10 md:pr-24">
         <div className="px-6 lg:px-10 flex-col flex gap-7 h-[100%] items-start justify-center">
-          <h1 className="text-6xl xl:text-7xl">Share your story.</h1>
+          <h1 className="text-5xl xl:text-7xl">Share your story.</h1>
           <p className="text-2xl">
             Put your story out there and let the world <br />
             know what you have to say.

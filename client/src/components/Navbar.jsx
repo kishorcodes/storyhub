@@ -3,18 +3,21 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../logo.svg";
 import user from "../assets/images/user.svg";
+
 const navigation = [
   { name: "Write Your Story", href: "#", current: true },
   { name: "About Us", href: "#", current: false },
-  { name: "Contact Us", href: "#", current: false },
   { name: "Stories", href: "#", current: false },
+  { name: "Contact Us", href: "#", current: false },
+
+  { name: "Login", href: "#", current: false },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ auth }) {
   return (
     <Disclosure as="nav" className="bg-yellow-400 border-b border-black">
       {({ open }) => (
@@ -41,11 +44,18 @@ export default function Navbar() {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
+                        onClick={() => {
+                          if (item.name === "Login")
+                            auth.setLoggedIn(!auth.loggedIn);
+                          console.log(auth.loggedIn);
+                        }}
                         key={item.name}
                         href={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
+                            : item.name === "Login"
+                            ? "text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white"
                             : "text-black-300 hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -59,10 +69,14 @@ export default function Navbar() {
 
                 {/* Profile dropdown */}
 
-                <img className="h-9 w-9 ml-4" src={user} alt="" />
+                {auth.loggedIn && (
+                  <img className="h-9 w-9 ml-4" src={user} alt="" />
+                )}
+
+                
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-400 hover:bg-gray-700 hover:text-white ">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#E040FB] hover:text-white ">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />

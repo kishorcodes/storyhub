@@ -3,13 +3,13 @@ import logo from "../logo.svg";
 const Footer = () => {
   return (
     <div className="h-[165px] bg-black flex flex-col lg:flex-row justify-between items-center py-4 px-8">
-      <div className="flex flex-col justify-center gap-3">
+      <div className="flex flex-col justify-center gap-5">
         <div className="flex flex-shrink-0 items-center justify-center lg:justify-start">
           <img className="block h-11 w-auto" src={logo} alt="Your Company" />
           <h1 className="font-bold text-white ml-1">STORYHUB</h1>
         </div>
 
-        <ul className="flex text-white gap-6 no-underline text-sm">
+        <ul className="flex text-white gap-6 no-underline text-xs lg:text-sm">
           <li>
             <a href="">Write</a>
           </li>
