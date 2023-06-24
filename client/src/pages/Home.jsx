@@ -2,6 +2,8 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import penguinTyping from "../assets/images/penguin-typing.gif";
 import Footer from "../components/Footer";
+import LatestStories from "./LatestStories";
+import Reccomended from "../components/Reccomended";
 const Home = () => {
   return (
     <>
@@ -30,6 +32,8 @@ const Home = () => {
           alt="penguin-typing"
         />
       </div>
+      <LatestStories></LatestStories>
+      <Reccomended></Reccomended>
       <Footer></Footer>
     </>
   );
