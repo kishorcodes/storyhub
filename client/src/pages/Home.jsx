@@ -21,6 +21,9 @@ const Home = () => {
             id="tk-dropdown"
             aria-haspopup="true"
             aria-expanded="true"
+            onClick={()=>{
+              document.querySelector('.reccomended').scrollIntoView()
+            }}
           >
             Start Reading
           </button>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import bookmark from '../assets/images/bookmark.svg';
 const StoryCard = () => {
   return (
     <div className="flex">
@@ -12,15 +12,19 @@ const StoryCard = () => {
           />
           <p className="text-md">Kishor</p>
         </div>
-        <p className="text-lg font-bold">
+        <p className="text-sm lg:text-lg font-bold">
           GOVT.JOB PREPARATION AND THEIR PATHETIC WORKING ENVIRONMENT ...
         </p>
 <p className="text-sm">Backfalls and history behind preparation...</p>
-        <div className="flex gap-4 justify-content items-center">
-          <p className="text-sm font-light">Mon Feb 13</p>
+        <div className="flex justify-between items-center">
+        <div className="flex gap-4 justify-center items-center">
+        <p className="text-sm font-light">Mon Feb 13</p>
           <div className="text-sm border p-1 border-black rounded-lg">
             Self Improvment
           </div>
+        </div>
+
+        <img className="mr-6 cursor-pointer" src={bookmark} height={30} width={30} alt="bookmark-icon" />
         </div>
       </div>
       <img
