@@ -1,14 +1,18 @@
-const LatestStoryCard = () => {
+const LatestStoryCard = ({
+  position,
+  title,
+  authorName,
+  authorImage,
+  category,
+  publishDate,
+}) => {
   return (
     <div className="flex w-fit gap-7">
-      <p className="text-[#38BDF8] text-3xl">01</p>
+      <p className="text-[#38BDF8] text-3xl">{position}</p>
       <div className="p-1 gap-2.5 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-3">
-          <img
-            src="https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15"
-            alt=""
-          />
-          <p className="text-md">Kishor</p>
+          <img src={authorImage} alt="" />
+          <p className="text-sm">Kishor</p>
         </div>
         <p className="text-md font-bold">My Journey</p>
 

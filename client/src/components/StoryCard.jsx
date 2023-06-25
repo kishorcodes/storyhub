@@ -24,7 +24,7 @@ const StoryCard = () => {
           </div>
         </div>
 
-        <img className="mr-6 cursor-pointer" src={bookmark} height={30} width={30} alt="bookmark-icon" />
+        <img className="mr-6 cursor-pointer hover:scale-105 duration-75 transition-all" src={bookmark} height={30} width={30} alt="bookmark-icon" />
         </div>
       </div>
       <img
