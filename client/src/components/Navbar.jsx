@@ -1,17 +1,14 @@
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import user from "../assets/images/user.svg";
-import logo from "../logo.svg";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.svg";
 const navigation = [
   { name: "Write Your Story", href: "#", current: true },
   { name: "About Us", href: "#", current: false },
   { name: "Stories", href: "#", current: false },
   { name: "Contact Us", href: "#", current: false },
-
-  // { name: "Login", href: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -21,10 +18,24 @@ function classNames(...classes) {
 export default function Navbar({ auth }) {
   const navigate = useNavigate();
 
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      auth.setUser(codeResponse);
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
+
+  const logOut = () => {
+    googleLogout();
+    localStorage.removeItem("userProfile");
+    auth.setProfile(null);
+  };
+
   return (
     <Disclosure as="nav" className="bg-yellow-400 border-b border-black">
       {({ open }) => (
         <>
+          <div></div>
           <div className="sticky mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
@@ -53,16 +64,11 @@ export default function Navbar({ auth }) {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
-                        onClick={() => {
-                          auth.setLoggedIn(!auth.loggedIn);
-                        }}
                         key={item.name}
                         href={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
-                            : item.name === "Login"
-                            ? "text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white"
                             : "text-black-300 hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -79,8 +85,8 @@ export default function Navbar({ auth }) {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
+                              src={auth.profile.picture}
+                              alt="user"
                             />
                           </Menu.Button>
                         </div>
@@ -112,9 +118,10 @@ export default function Navbar({ auth }) {
                               {({ active }) => (
                                 <a
                                   onClick={() => {
+                                    logOut();
                                     auth.setLoggedIn(false);
                                   }}
-                                  href="#"
+                                  href="/"
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
@@ -130,9 +137,9 @@ export default function Navbar({ auth }) {
                     ) : (
                       <a
                         onClick={() => {
-                          auth.setLoggedIn(true);
+                          login();
                         }}
-                        href={"#"}
+                        href={"/"}
                         className={classNames(
                           "text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white",
 
@@ -146,10 +153,7 @@ export default function Navbar({ auth }) {
                   </div>
                 </div>
 
-                {/* Profile dropdown */}
-
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-                  {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#E040FB] hover:text-white ">
                     <span className="sr-only">Open main menu</span>
                     {open ? (

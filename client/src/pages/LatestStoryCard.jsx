@@ -7,7 +7,7 @@ const LatestStoryCard = ({
   publishDate,
 }) => {
   return (
-    <div className="flex w-fit gap-7">
+    <div className="flex w-fit gap-7 cursor-pointer">
       <p className="text-[#38BDF8] text-3xl">{position}</p>
       <div className="p-1 gap-2.5 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-3">
