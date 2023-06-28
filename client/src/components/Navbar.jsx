@@ -1,8 +1,8 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 import logo from "../assets/images/logo.svg";
 const navigation = [
   { name: "Write Your Story", href: "#", current: true },
@@ -15,24 +15,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ auth }) {
+export default function Navbar() {
+  const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      auth.setUser(codeResponse);
-    },
-    onError: (error) => console.log("Login Failed:", error),
-  });
-
-  const logOut = () => {
-    googleLogout();
-    localStorage.removeItem("userProfile");
-    auth.setProfile(null);
-  };
-
   return (
-    <Disclosure as="nav" className="bg-yellow-400 border-b border-black">
+    <Disclosure
+      as="nav"
+      className="font-arial bg-yellow-400 border-b border-black"
+    >
       {({ open }) => (
         <>
           <div></div>
@@ -46,17 +37,17 @@ export default function Navbar({ auth }) {
                   }}
                 >
                   <img
-                    className="block h-11 w-auto lg:hidden"
+                    className="block h-10 sm:h11 w-auto lg:hidden"
                     src={logo}
                     alt="Your Company"
                   />
                   <img
-                    className="hidden h-11 w-auto lg:block"
+                    className="hidden   h-10 sm:h11 w-auto lg:block"
                     src={logo}
                     alt="Your Company"
                   />
 
-                  <h1 className="font-bold ml-1">STORYHUB</h1>
+                  <h1 className="font-bold ml-1 text-sm">STORYHUB</h1>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -78,14 +69,14 @@ export default function Navbar({ auth }) {
                       </a>
                     ))}
 
-                    {auth.loggedIn ? (
+                    {userProfile ? (
                       <Menu as="div" className="relative ml-3">
                         <div>
                           <Menu.Button className="flex hover:scale-105 duration-75 transition-all rounded-full bg-gray-800 text-sm focus:outline-none">
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={auth.profile.picture}
+                              src={userProfile.picture}
                               alt="user"
                             />
                           </Menu.Button>
@@ -102,24 +93,23 @@ export default function Navbar({ auth }) {
                           <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
-                                <a
-                                  href="/profile"
+                                <p
+                                 
                                   className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                    "font-bold underline underline-offset-2 font-bold block px-4 py-2 text-sm text-gray-700"
                                   )}
                                 >
-                                  Your Profile
-                                </a>
+                                  {userProfile.name}
+                                </p>
                               )}
                             </Menu.Item>
 
                             <Menu.Item>
                               {({ active }) => (
                                 <a
-                                  onClick={() => {
-                                    logOut();
-                                    auth.setLoggedIn(false);
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    logout();
                                   }}
                                   href="/"
                                   className={classNames(
@@ -136,8 +126,9 @@ export default function Navbar({ auth }) {
                       </Menu>
                     ) : (
                       <a
-                        onClick={() => {
+                        onClick={(e) => {
                           login();
+                          e.preventDefault();
                         }}
                         href={"/"}
                         className={classNames(
@@ -153,6 +144,90 @@ export default function Navbar({ auth }) {
                   </div>
                 </div>
 
+                {userProfile ? (
+                  <Menu as="div" className="relative mr-3 sm:hidden">
+                    <div>
+                      <Menu.Button className="flex hover:scale-105 duration-75 transition-all rounded-full bg-gray-800 text-sm focus:outline-none">
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={userProfile.picture}
+                          alt="user"
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <p
+                            className={classNames(
+                              "font-bold underline underline-offset-2 font-bold block px-4 py-2 text-sm text-gray-700"
+                            )}
+                            >
+                              {userProfile.name}
+                            </p>
+                          )}
+                        </Menu.Item>
+
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={(e) => {
+                                logout();
+                                e.preventDefault();
+                              }}
+                              href="/"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ) : (
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      login();
+                    }}
+                    href={"/"}
+                    className={classNames(
+                      "sm:hidden mr-10 text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white",
+
+                      "rounded-md px-3 py-2 text-sm font-medium"
+                    )}
+                    aria-current={undefined}
+                  >
+                    Login
+                  </a>
+                )}
+
+              {isLoggedIn &&   <a
+                  key={55}
+                  href={"/"}
+                  className={classNames(
+                    "bg-gray-900 text-white mr-10 sm:hidden",
+                    "rounded-md px-3 py-2 text-sm font-medium"
+                  )}
+                  aria-current={"page"}
+                >
+                  Write
+                </a>
+}
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#E040FB] hover:text-white ">
                     <span className="sr-only">Open main menu</span>

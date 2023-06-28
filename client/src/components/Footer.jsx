@@ -11,9 +11,9 @@ const Footer = () => {
 
         <ul className="flex text-white gap-2.5 md:gap-6 no-underline">
           {["Write", "About Us", "Contact Us", "Bookmark", "Stories"].map(
-            (link) => {
+            (link, index) => {
               return (
-                <li>
+                <li key={index}>
                   <p className="text-sm">{link}</p>
                 </li>
               );

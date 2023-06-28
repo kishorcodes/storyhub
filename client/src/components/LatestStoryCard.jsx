@@ -12,14 +12,14 @@ const LatestStoryCard = ({
       <div className="p-1 gap-2.5 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-3">
           <img src={authorImage} alt="" />
-          <p className="text-sm">Kishor</p>
+          <p className="text-sm">{authorName}</p>
         </div>
-        <p className="text-md font-bold">My Journey</p>
+        <p className="text-sm font-bold">{title}</p>
 
         <div className="flex gap-4 justify-content items-center">
-          <p className="text-sm font-light">Mon Feb 13</p>
+          <p className="text-sm font-light">{publishDate}</p>
           <div className="text-sm border p-1 border-black rounded-lg">
-            Self Improvment
+            {category}
           </div>
         </div>
       </div>
