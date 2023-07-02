@@ -2,6 +2,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Toaster } from "react-hot-toast";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
+import Write from "./components/Write";
 import Home from "./pages/Home";
 import { AuthProvider } from "./AuthContext";
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/write" element={<Write />}></Route>
           </Routes>
         </Router>
       </AuthProvider>

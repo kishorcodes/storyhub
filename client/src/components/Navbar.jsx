@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import logo from "../assets/images/logo.svg";
 const navigation = [
-  { name: "Write Your Story", href: "#", current: true },
-  { name: "About Us", href: "#", current: false },
-  { name: "Stories", href: "#", current: false },
+  { name: "Write Your Story", href: "/write", current: true },
+  { name: "About Us", href: "/about", current: false },
+  { name: "Stories", href: "/stories", current: false },
   { name: "Contact Us", href: "#", current: false },
 ];
 
@@ -15,15 +15,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ color, bordered }) {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  let disclosureClasses = "font-arial bg-" + color + "-400";
+  if (bordered) disclosureClasses += " border-b border-black";
   return (
-    <Disclosure
-      as="nav"
-      className="font-arial bg-yellow-400 border-b border-black"
-    >
+    <Disclosure as="nav" className={disclosureClasses}>
       {({ open }) => (
         <>
           <div></div>
@@ -94,7 +92,6 @@ export default function Navbar() {
                             <Menu.Item>
                               {({ active }) => (
                                 <p
-                                 
                                   className={classNames(
                                     "font-bold underline underline-offset-2 font-bold block px-4 py-2 text-sm text-gray-700"
                                   )}
@@ -169,9 +166,9 @@ export default function Navbar() {
                         <Menu.Item>
                           {({ active }) => (
                             <p
-                            className={classNames(
-                              "font-bold underline underline-offset-2 font-bold block px-4 py-2 text-sm text-gray-700"
-                            )}
+                              className={classNames(
+                                "font-bold underline underline-offset-2 font-bold block px-4 py-2 text-sm text-gray-700"
+                              )}
                             >
                               {userProfile.name}
                             </p>
@@ -216,18 +213,19 @@ export default function Navbar() {
                   </a>
                 )}
 
-              {isLoggedIn &&   <a
-                  key={55}
-                  href={"/"}
-                  className={classNames(
-                    "bg-gray-900 text-white mr-10 sm:hidden",
-                    "rounded-md px-3 py-2 text-sm font-medium"
-                  )}
-                  aria-current={"page"}
-                >
-                  Write
-                </a>
-}
+                {isLoggedIn && (
+                  <a
+                    key={55}
+                    href={"/"}
+                    className={classNames(
+                      "bg-gray-900 text-white mr-10 sm:hidden",
+                      "rounded-md px-3 py-2 text-sm font-medium"
+                    )}
+                    aria-current={"page"}
+                  >
+                    Write
+                  </a>
+                )}
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#E040FB] hover:text-white ">
                     <span className="sr-only">Open main menu</span>

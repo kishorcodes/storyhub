@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
         })
         .then((res) => {
           resolve(res.data);
+          console.log(res.data);
           setUserProfile(res.data);
           localStorage.setItem("userProfile", JSON.stringify(res.data));
           setIsLoggedIn(true);
@@ -38,11 +39,12 @@ export const AuthProvider = ({ children }) => {
       success: <b>Logged in!</b>,
       error: <b>Could not Login.</b>,
     });
-    console.log(user);
   }, [user]);
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => {
+      setUser(codeResponse)
+    },
     onError: (error) => console.log("Login Failed:", error),
   });
 

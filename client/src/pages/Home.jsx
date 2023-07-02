@@ -7,8 +7,7 @@ import Reccomended from "../components/Reccomended";
 const Home = () => {
   return (
     <>
-      <Navbar></Navbar>
-
+      <Navbar color={"yellow"} bordered={true}></Navbar>
       <div className="border-b border-black bg-yellow-400 h-[500px] flex flex-col md:flex-row justify-between md:pl-10 md:pr-24">
         <div className="px-6 lg:px-10 flex-col flex gap-7 h-[100%] items-start justify-center">
           <h1 className="font-montse text-5xl xl:text-7xl">
