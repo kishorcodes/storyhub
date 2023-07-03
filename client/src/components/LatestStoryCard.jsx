@@ -8,17 +8,21 @@ const LatestStoryCard = ({
 }) => {
   return (
     <div className="flex w-fit gap-7 cursor-pointer">
-      <p className="text-[#38BDF8] text-3xl">{position}</p>
-      <div className="p-1 gap-2.5 flex flex-col justify-start">
+      <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
+      <div className="p-1 gap-3 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-3">
-          <img src={authorImage} alt="" />
-          <p className="text-sm">{authorName}</p>
+          <img
+            className="w-[20px] h-[20px] rounded-sm"
+            src={authorImage}
+            alt=""
+          />
+          <p className="text-sm font-medium">{authorName}</p>
         </div>
-        <p className="text-sm font-bold">{title}</p>
+        <p className="text-md font-medium">{title}</p>
 
         <div className="flex gap-4 justify-content items-center">
           <p className="text-sm font-light">{publishDate}</p>
-          <div className="text-sm border p-1 border-black rounded-lg">
+          <div className="text-sm font-light border p-1 border-cyan rounded-lg">
             {category}
           </div>
         </div>

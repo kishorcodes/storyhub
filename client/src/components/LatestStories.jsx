@@ -5,7 +5,7 @@ const LatestStories = () => {
       authorName: "Kishor",
       authorImage:
         "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
+      title: "Hard Work vs Talent",
       publishDate: "Mon Feb 13",
       category: "Self Improvment",
     },
@@ -13,7 +13,7 @@ const LatestStories = () => {
       authorName: "Kishor",
       authorImage:
         "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
+      title: "Hard Work vs Talent",
       publishDate: "Mon Feb 13",
       category: "Self Improvment",
     },
@@ -21,7 +21,7 @@ const LatestStories = () => {
       authorName: "Kishor",
       authorImage:
         "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
+      title: "Hard Work vs Talent",
       publishDate: "Mon Feb 13",
       category: "Self Improvment",
     },
@@ -29,7 +29,7 @@ const LatestStories = () => {
       authorName: "Kishor",
       authorImage:
         "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
+      title: "Hard Work vs Talent",
       publishDate: "Mon Feb 13",
       category: "Self Improvment",
     },

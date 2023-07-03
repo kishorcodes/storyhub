@@ -14,12 +14,12 @@ const Discover = () => {
   ]);
   return (
     <div className="sticky top-0 w-full lg:w-2/5 h-fit py-12 px-8 flex flex-col justify-center gap-3 items-start border-b border-t border-[#e5e7eb] ">
-      <p className="font-bold">DISCOVER MORE OF WHAT MATTERS TO YOU</p>
+      <p className="font-semibold">DISCOVER MORE OF WHAT MATTERS TO YOU</p>
       <div className="flex flex-wrap gap-1.5">
         {categories.map((category, index) => (
           <div
             key={index}
-            className="flex items-center justify-center px-1 py-1 text-sm border border-cyan rounded-md hover:border-black cursor-pointer"
+            className="flex font-normal items-center justify-center px-1 py-1 text-sm border border-cyan rounded-md hover:border-black cursor-pointer"
           >
             {category}
           </div>

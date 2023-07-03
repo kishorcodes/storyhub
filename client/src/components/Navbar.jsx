@@ -216,7 +216,7 @@ export default function Navbar({ color, bordered }) {
                 {isLoggedIn && (
                   <a
                     key={55}
-                    href={"/"}
+                    href={"/write"}
                     className={classNames(
                       "bg-gray-900 text-white mr-10 sm:hidden",
                       "rounded-md px-3 py-2 text-sm font-medium"
