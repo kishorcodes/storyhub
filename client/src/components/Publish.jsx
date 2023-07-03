@@ -1,6 +1,9 @@
 import Submitbar from "./Submitbar";
 import Footer from "./Footer";
-const Publish = ({ setPublishMode }) => {
+import close from "../assets/images/close.svg";
+
+import { useEffect } from "react";
+const Publish = ({ setPublishMode, content }) => {
   const categories = [
     "Personal",
     "Finance",
@@ -13,23 +16,29 @@ const Publish = ({ setPublishMode }) => {
     "Environment",
     "Others",
   ];
+
+  useEffect(() => {
+    window.onpopstate = (e) => {
+      console.log("pressed");
+    };
+  });
   return (
     <>
-      <Submitbar
-        color={"transparent"}
-        action="close"
-        bordered={false}
-        setPublishMode={setPublishMode}
-      >
-        {" "}
-      </Submitbar>
-
-      <div className="px-5 py-4 lg:p-20 flex flex-col md:flex-row items-center justify-center gap-10 w-[100%]">
+      <img
+        src={close}
+        className="h-[20px] w-[20px] lg:h-[25px] lg:w-[25px] absolute top-6 right-6 cursor-pointer"
+        alt="close"
+        onClick={() => {
+          setPublishMode(false);
+        }}
+      />
+      <div className="px-5 py-5 lg:p-28 flex flex-col md:flex-row items-center justify-center gap-10 min-h-[80vh] w-[100%]">
         <div className="flex flex-col justify-start gap-5 w-[100%] ">
           <p className="text-md font-semibold">Story Preview</p>
-          <div className="p-5 rounded-md bg-[#F1F5F9] min-h-[250px] h-fit w-[100%]">
-            ff
-          </div>
+          <div
+            dangerouslySetInnerHTML={{ __html: content }}
+            className="p-5 rounded-md bg-[#F1F5F9] min-h-[250px] h-fit w-[100%]"
+          ></div>
           <input
             type="text"
             class="placeholder:bold w-full text-lg border-b-2 border-gray-400 outline-none focus:border-blue-400"
@@ -98,7 +107,6 @@ const Publish = ({ setPublishMode }) => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </>
   );
 };
