@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import LatestStories from "../components/LatestStories";
 import Navbar from "../components/Navbar";
 import Reccomended from "../components/Reccomended";
+
 const Home = () => {
   return (
     <>

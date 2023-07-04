@@ -25,7 +25,7 @@ export default function Navbar({ color, bordered }) {
       {({ open }) => (
         <>
           <div></div>
-          <div className="sticky mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
+          <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
                 <div
