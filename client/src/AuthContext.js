@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
           localStorage.setItem("userProfile", JSON.stringify(res.data));
           setIsLoggedIn(true);
         })
-        .catch((err) => reject());
+        .catch(() => reject());
     });
   };
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      setUser(codeResponse)
+      setUser(codeResponse);
     },
     onError: (error) => console.log("Login Failed:", error),
   });

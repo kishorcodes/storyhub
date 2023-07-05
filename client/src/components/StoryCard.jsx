@@ -1,8 +1,14 @@
 import React from "react";
 import bookmark from "../assets/images/bookmark.svg";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const StoryCard = () => {
+const navigate = useNavigate()
+
   return (
-    <div className="flex">
+    <div onClick={()=>{
+      navigate('/about')
+    }} className="flex">
       <div className="p-1 gap-2.5 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-2">
           <img
@@ -32,6 +38,7 @@ const StoryCard = () => {
             height={30}
             width={30}
             alt="bookmark-icon"
+            onClick={() => toast.success("Successfully Added")}
           />
         </div>
       </div>

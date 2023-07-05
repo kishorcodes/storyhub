@@ -1,5 +1,5 @@
 import React from "react";
-import penguinTyping from "../assets/images/penguin-typing.gif";
+import penguinTyping from "../assets/images/pencil.gif";
 import Footer from "../components/Footer";
 import LatestStories from "../components/LatestStories";
 import Navbar from "../components/Navbar";
@@ -8,13 +8,13 @@ import Reccomended from "../components/Reccomended";
 const Home = () => {
   return (
     <>
-      <Navbar color={"yellow"} bordered={true}></Navbar>
-      <div className="border-b border-black bg-yellow-400 h-[500px] flex flex-col md:flex-row justify-between md:pl-10 md:pr-24">
+      <Navbar color={"[#42A5F5]"} bordered={false}></Navbar>
+      <div className="border-b border-black bg-[#42A5F5] h-[500px] flex flex-col md:flex-row justify-between md:pl-10 md:pr-24">
         <div className="px-6 lg:px-10 flex-col flex gap-7 h-[100%] items-start justify-center">
-          <h1 className="font-montse text-5xl xl:text-7xl">
+          <h1 className="font-montse text-[#FFEB3B] text-5xl xl:text-7xl">
             Share your story.
           </h1>
-          <p className="text-2xl font-arial">
+          <p className="text-2xl text-[#3E2723] font-arial">
             Put your story out there and let the world <br />
             know what you have to say.
           </p>

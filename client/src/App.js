@@ -16,8 +16,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/write" element={<Write />}></Route>
-            <Route exact path="/about" element={<Story/>}></Route>
-
+            <Route exact path="/about" element={<Story />}></Route>
           </Routes>
         </Router>
       </AuthProvider>

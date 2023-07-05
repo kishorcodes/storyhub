@@ -18,8 +18,9 @@ function classNames(...classes) {
 export default function Navbar({ color, bordered }) {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  let disclosureClasses = "font-arial bg-" + color + "-400";
-  if (bordered) disclosureClasses += " border-b border-black";
+  let disclosureClasses = "font-arial bg-"+color;
+  console.log(disclosureClasses);
+  if (bordered) disclosureClasses += " border-b border-cyan";
   return (
     <Disclosure as="nav" className={disclosureClasses}>
       {({ open }) => (

@@ -19,7 +19,7 @@ const Discover = () => {
         {categories.map((category, index) => (
           <div
             key={index}
-            className="flex font-normal items-center justify-center px-1 py-1 text-sm border border-cyan rounded-md hover:border-black cursor-pointer"
+            className="flex items-center justify-center text-sm font-normal px-1 py-1 border border-cyan rounded-md cursor-pointer hover:border-black"
           >
             {category}
           </div>
