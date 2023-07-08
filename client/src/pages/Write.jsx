@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import MarkdownEditor from "./MarkdownEditor";
-import Publish from "./Publish";
-import Submitbar from "./Submitbar";
+import MarkdownEditor from "../components/MarkdownEditor";
+import Publish from "../components/Publish";
+import Submitbar from "../components/Submitbar";
 const Write = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [showDraftSaved, setShowDraftSaved] = useState(false);

@@ -1,5 +1,5 @@
-import LatestStoryCard from "./LatestStoryCard";
 import arrow from "../assets/images/diagonal_arrow.svg";
+import LatestStoryCard from "./LatestStoryCard";
 const LatestStories = () => {
   const stories = [
     {

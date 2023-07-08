@@ -1,5 +1,4 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useRef } from "react";
 
 const MarkdownEditor = ({ setEditorLoaded, setShowDraftSaved, editorRef }) => {
   const tinyMceAPIKey = process.env.REACT_APP_TINYMCE_API_KEY;

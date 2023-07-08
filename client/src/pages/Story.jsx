@@ -5,6 +5,7 @@ import link from "../assets/images/link.svg";
 import ReadmoreCard from "../components/ReadmoreCard";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Comments from "../components/Comments";
 const Story = () => {
   const navigate = useNavigate();
 
@@ -21,13 +22,13 @@ const Story = () => {
               We would appreciate if you write something
             </div>
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-end justify-between px-4 lg:px-12 lg:py-12 py-8">
+          <div className="flex flex-col items-between justify-center">
+            <div className="flex flex-col items-start gap-3 sm:gap-0 sm:flex-row sm:items-end justify-between px-4 lg:px-12 lg:py-12 py-8">
               <div className="user flex justify-start items-center gap-4">
                 <img
                   src="https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80"
                   alt=""
-                  className="rounded-full h-[48px] w-[48px]"
+                  className="rounded-full h-[35px] w-[35px] md:h-[48px] md:w-[48px]"
                 />
                 <div className="flex flex-col">
                   <p className="text-md font-medium">Kishor</p>
@@ -42,7 +43,7 @@ const Story = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-5">
+              <div className="flex items-center justify-center gap-2 lg:gap-5">
                 <img className="h-[18px] w-[18px]" src={whatsapp} alt="" />
                 <img className="h-[18px] w-[18px]" src={twitter} alt="" />
                 <img className="h-[18px] w-[18px]" src={bookmark} alt="" />
@@ -99,6 +100,7 @@ const Story = () => {
               </p>
             </div>
           </div>
+          <Comments></Comments>
         </div>
         <div className="border-t border-cyan hidden lg:flex flex-col justify-start items-center w-[400px] h-[700px]">
           <div className="border-b border-cyan relative py-24 px-1 flex w-[100%] h-[150px] flex-col items-center justify-center">

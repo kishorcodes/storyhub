@@ -4,6 +4,7 @@ import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import logo from "../assets/images/logo.svg";
+
 const navigation = [
   { name: "Write Your Story", href: "/write", current: true },
   { name: "About Us", href: "/about", current: false },
@@ -18,7 +19,7 @@ function classNames(...classes) {
 export default function Navbar({ color, bordered }) {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  let disclosureClasses = "font-arial bg-"+color;
+  let disclosureClasses = "text-white font-arial bg-" + color;
   console.log(disclosureClasses);
   if (bordered) disclosureClasses += " border-b border-cyan";
   return (
@@ -30,23 +31,23 @@ export default function Navbar({ color, bordered }) {
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
                 <div
-                  className="flex flex-shrink-0 items-center"
+                  className="flex justify-center items-center gap-1"
                   onClick={() => {
                     navigate("/");
                   }}
                 >
                   <img
-                    className="block h-10 sm:h11 w-auto lg:hidden"
+                    className="block rounded-full h-8 w-auto lg:hidden"
                     src={logo}
                     alt="Your Company"
                   />
                   <img
-                    className="hidden   h-10 sm:h11 w-auto lg:block"
+                    className="hidden rounded-full h-8 w-auto lg:block"
                     src={logo}
                     alt="Your Company"
                   />
 
-                  <h1 className="font-bold ml-1 text-sm">STORYHUB</h1>
+                  <h1 className="font-bold ml-1 text-md">STORYHUB</h1>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -58,7 +59,7 @@ export default function Navbar({ color, bordered }) {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-white"
+                            ? "bg-[#292C2E] text-white"
                             : "text-black-300 hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -130,8 +131,7 @@ export default function Navbar({ color, bordered }) {
                         }}
                         href={"/"}
                         className={classNames(
-                          "text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white",
-
+                          "text-white bg-[#7CB342] hover:bg-[#388E3C] hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={undefined}
@@ -204,7 +204,7 @@ export default function Navbar({ color, bordered }) {
                     }}
                     href={"/"}
                     className={classNames(
-                      "sm:hidden mr-10 text-white bg-[dodgerblue] hover:bg-[#E040FB] hover:text-white",
+                      "sm:hidden mr-10 text-white bg-[#7CB342] hover:bg-[#388E3C] hover:text-white",
 
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}
@@ -250,8 +250,8 @@ export default function Navbar({ color, bordered }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-black hover:bg-gray-700 hover:text-white",
+                      ? "bg-[#292C2E]"
+                      : "text-white hover:bg-gray-700 hover:text-white",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
