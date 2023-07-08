@@ -2,7 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 
-export default function Submitbar({ showDraftSaved, setPublishMode}) {
+export default function Submitbar({ showDraftSaved, setPublishMode }) {
   const navigate = useNavigate();
 
   return (
@@ -17,24 +17,24 @@ export default function Submitbar({ showDraftSaved, setPublishMode}) {
           >
             <div className="flex h-16 items-center justify-between lg:justify-around">
               <div className="cursor-pointer flex items-center justify-between sm:items-stretch sm:justify-start">
-                <div
-                  className="flex flex-shrink-0 items-center"
+              <div
+                  className="flex justify-center items-center gap-1"
                   onClick={() => {
                     navigate("/");
                   }}
                 >
                   <img
-                    className="block h-10 sm:h11 w-auto lg:hidden"
+                    className="block rounded-full h-8 w-auto lg:hidden"
                     src={logo}
                     alt="Your Company"
                   />
                   <img
-                    className="hidden   h-10 sm:h11 w-auto lg:block"
+                    className="hidden rounded-full h-8 w-auto lg:block"
                     src={logo}
                     alt="Your Company"
                   />
 
-                  <h1 className="font-bold ml-1 text-sm">STORYHUB</h1>
+                  <h1 className="font-bold ml-1 text-md">STORYHUB</h1>
                 </div>
               </div>
               <h2 className={"text-[#A3A3A3] text-sm lg:text-md"}>

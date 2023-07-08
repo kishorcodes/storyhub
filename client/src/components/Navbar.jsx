@@ -4,7 +4,6 @@ import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import logo from "../assets/images/logo.svg";
-
 const navigation = [
   { name: "Write Your Story", href: "/write", current: true },
   { name: "About Us", href: "/about", current: false },
@@ -16,11 +15,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ color, bordered }) {
+const Navbar = ({ color, bordered, theme }) => {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   let disclosureClasses = "text-white font-arial bg-" + color;
-  console.log(disclosureClasses);
+  disclosureClasses += theme === "dark" ? " text-black" : " text-white";
   if (bordered) disclosureClasses += " border-b border-cyan";
   return (
     <Disclosure as="nav" className={disclosureClasses}>
@@ -60,7 +59,7 @@ export default function Navbar({ color, bordered }) {
                         className={classNames(
                           item.current
                             ? "bg-[#292C2E] text-white"
-                            : "text-black-300 hover:bg-gray-700 hover:text-white",
+                            : "hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -228,7 +227,7 @@ export default function Navbar({ color, bordered }) {
                   </a>
                 )}
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#E040FB] hover:text-white ">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black-300 hover:bg-[#424242] hover:text-white ">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -250,8 +249,8 @@ export default function Navbar({ color, bordered }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-[#292C2E]"
-                      : "text-white hover:bg-gray-700 hover:text-white",
+                      ? "bg-[#292C2E] text-white"
+                      : "hover:bg-gray-700",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
@@ -265,4 +264,6 @@ export default function Navbar({ color, bordered }) {
       )}
     </Disclosure>
   );
-}
+};
+
+export default Navbar;

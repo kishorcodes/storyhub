@@ -1,9 +1,9 @@
-import laptopUser from "../assets/images/blog.svg";
+import laptopUser from "../assets/images/laptop_user.svg";
 import Footer from "../components/Footer";
 import LatestStories from "../components/LatestStories";
 import Navbar from "../components/Navbar";
 import Reccomended from "../components/Reccomended";
-
+import Button from "../components/Button";
 const Home = () => {
   return (
     <>
@@ -18,20 +18,18 @@ const Home = () => {
             <br className="hidden md:block" />
             know what you have to say.
           </p>
-          <button
-            type="button"
-            className="scale-100 hover:scale-105 transition-all duration-75 ease-in flex justify-center items-center font-medium rounded-xl px-5 py-2.5 text-md bg-[#7CB342] text-white"
-            id="tk-dropdown"
-            aria-haspopup="true"
-            aria-expanded="true"
+
+          <Button
+            text="Start Reading"
+            bgColor={"[#7CB342]"}
+            fgColor={"white"}
+            hoverColor={"[#388E3C]"}
             onClick={() => {
               document
                 .querySelector(".reccomended")
                 .scrollIntoView({ behavior: "smooth" });
             }}
-          >
-            Start Reading
-          </button>
+          ></Button>
         </div>
 
         <img

@@ -11,7 +11,7 @@ const Story = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar theme={"dark"}></Navbar>
       <div className="flex w-100">
         <div className="flex flex-col flex-1 border border-cyan ">
           <div className="h-[70px] flex items-center justify-center">
@@ -106,7 +106,7 @@ const Story = () => {
           <div className="border-b border-cyan relative py-24 px-1 flex w-[100%] h-[150px] flex-col items-center justify-center">
             <button
               type="button"
-              className="scale-100 w-[96%] hover:scale-105  transition-all duration-75 ease-in inline-flex justify-center items-center font-semibold rounded-lg px-5 py-3 text-md bg-black text-white hover:text-white"
+              className="w-[96%]  transition-all duration-75 ease-in inline-flex justify-center items-center font-semibold rounded-lg px-5 py-3 text-md bg-black text-white hover:text-white"
               id="tk-dropdown"
               aria-haspopup="true"
               aria-expanded="true"
@@ -118,7 +118,7 @@ const Story = () => {
             </h1>
           </div>
           {Array.from({ length: 6 }).map((element, index) => {
-            return <ReadmoreCard />;
+            return <ReadmoreCard key={index} />;
           })}
         </div>
       </div>

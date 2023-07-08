@@ -1,7 +1,7 @@
 import Submitbar from "./Submitbar";
 import Footer from "./Footer";
 import close from "../assets/images/close.svg";
-
+import Button from "./Button";
 import { useEffect } from "react";
 const Publish = ({ setPublishMode, content }) => {
   const categories = [
@@ -92,18 +92,14 @@ const Publish = ({ setPublishMode, content }) => {
           </p>
 
           <div className="">
-            <button
-              type="button"
-              className="transition-all hover:bg-green-700 duration-75 ease-in inline-flex justify-center items-center rounded-2xl px-4 py-2 text-sm bg-green-600 text-white"
-              id="tk-dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
+            <Button
+              text={"Publish"}
+              bgColor={"green-600"}
+              fgColor={"white"}
               onClick={() => {
                 console.log("publishing...");
               }}
-            >
-              Publish
-            </button>
+            />
           </div>
         </div>
       </div>
