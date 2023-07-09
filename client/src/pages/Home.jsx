@@ -13,7 +13,7 @@ const Home = () => {
           <h1 className="font-montse text-[#FFEB3B] text-3xl md:text-5xl lg:text-7xl">
             Share your story.
           </h1>
-          <p className="text-lg lg:text-xl text-white font-arial">
+          <p className="text-lg font-normal lg:text-xl text-white font-arial">
             Put your story out there and let the world{" "}
             <br className="hidden md:block" />
             know what you have to say.

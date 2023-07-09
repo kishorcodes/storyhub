@@ -5,13 +5,17 @@ import { toast } from "react-hot-toast";
 import useDidMountEffect from "./hooks/useDidMountEffect";
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
+  //get saved user session from local storage
   const storedProfile = localStorage.getItem("userProfile");
   const initialProfile = storedProfile ? JSON.parse(storedProfile) : null;
   const initialLoggedIn = storedProfile ? true : false;
+  
+  //states to keep track of user info and login state
   const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState(initialProfile);
 
+  //get user profile and set to localstorage
   const getUserInfo = () => {
     const userInfoAPIUrl = process.env.REACT_APP_USERINFO_API_URL;
     return new Promise((resolve, reject) => {
@@ -33,6 +37,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  // dont run on initial render
   useDidMountEffect(() => {
     toast.promise(getUserInfo(), {
       loading: "Logging in...",

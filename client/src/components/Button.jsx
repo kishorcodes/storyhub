@@ -10,7 +10,7 @@ const Button = ({
     <button
       type="button"
       className={
-        "transition-all duration-75 ease-in inline-flex justify-center items-center font-medium rounded-xl px-5 py-3 text-md bg-" +
+        "transition-all duration-75 ease-in inline-flex justify-center items-center font-medium rounded-lg px-5 py-3 text-sm md:text-md bg-" +
         bgColor +
         " text-" +
         fgColor +

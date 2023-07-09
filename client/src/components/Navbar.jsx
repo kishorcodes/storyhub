@@ -18,7 +18,7 @@ function classNames(...classes) {
 const Navbar = ({ color, bordered, theme }) => {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  let disclosureClasses = "text-white font-arial bg-" + color;
+  let disclosureClasses = "font-arial bg-" + color;
   disclosureClasses += theme === "dark" ? " text-black" : " text-white";
   if (bordered) disclosureClasses += " border-b border-cyan";
   return (
@@ -46,7 +46,7 @@ const Navbar = ({ color, bordered, theme }) => {
                     alt="Your Company"
                   />
 
-                  <h1 className="font-bold ml-1 text-md">STORYHUB</h1>
+                  <h1 className="font-bold ml-1 text-md font-medium">STORYHUB</h1>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -60,7 +60,7 @@ const Navbar = ({ color, bordered, theme }) => {
                           item.current
                             ? "bg-[#292C2E] text-white"
                             : "hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                          "rounded-md px-3 py-2 text-sm font-normal"
                         )}
                         aria-current={item.current ? "page" : undefined}
                       >
@@ -251,7 +251,7 @@ const Navbar = ({ color, bordered, theme }) => {
                     item.current
                       ? "bg-[#292C2E] text-white"
                       : "hover:bg-gray-700",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                    "block rounded-md px-3 py-2 text-base font-normal"
                   )}
                   aria-current={item.current ? "page" : undefined}
                 >

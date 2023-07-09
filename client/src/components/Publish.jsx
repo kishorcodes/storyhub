@@ -1,8 +1,6 @@
-import Submitbar from "./Submitbar";
-import Footer from "./Footer";
+import { useEffect } from "react";
 import close from "../assets/images/close.svg";
 import Button from "./Button";
-import { useEffect } from "react";
 const Publish = ({ setPublishMode, content }) => {
   const categories = [
     "Personal",

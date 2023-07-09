@@ -1,5 +1,5 @@
-import logo from "../assets/images/logo.svg";
 import { Link } from "react-router-dom";
+import logo from "../assets/images/logo.svg";
 const Footer = () => {
   const navigation = [
     { name: "Write Your Story", href: "/write", current: true },
@@ -21,7 +21,7 @@ const Footer = () => {
           {navigation.map((link, index) => {
             return (
               <li key={index}>
-                <a className="text-sm" href={link.href}>
+                <a className="text-sm font-normal" href={link.href}>
                   {link.name}
                 </a>
               </li>
@@ -30,9 +30,9 @@ const Footer = () => {
         </ul>
       </div>
 
-      <p className="text-white text-sm lg:text-lg">
+      <p className="text-white text-sm font-normal lg:text-lg">
         Made with 💙 in India by{" "}
-        <a href="https://github.com/kishorcodes">Kishor</a>{" "}
+        <a className="underline" href="https://github.com/kishorcodes">Kishor</a>{" "}
       </p>
     </div>
   );

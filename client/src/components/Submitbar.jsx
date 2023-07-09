@@ -17,7 +17,7 @@ export default function Submitbar({ showDraftSaved, setPublishMode }) {
           >
             <div className="flex h-16 items-center justify-between lg:justify-around">
               <div className="cursor-pointer flex items-center justify-between sm:items-stretch sm:justify-start">
-              <div
+                <div
                   className="flex justify-center items-center gap-1"
                   onClick={() => {
                     navigate("/");
