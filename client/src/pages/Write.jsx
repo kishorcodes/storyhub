@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import MarkdownEditor from "../components/MarkdownEditor";
+import MoonLoader from "../components/MoonLoader";
 import Publish from "../components/Publish";
 import Submitbar from "../components/Submitbar";
 const Write = () => {
@@ -18,6 +19,7 @@ const Write = () => {
   } else {
     return (
       <>
+        {!editorLoaded && <MoonLoader />}
         <Submitbar
           //SHIT
           showDraftSaved={

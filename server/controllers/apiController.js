@@ -1,6 +1,45 @@
 require("../config/dbConnect");
 const User = require("../models/User");
 const Story = require("../models/Story");
+const Comment = require("../models/Comment");
+
+const addComment = async (req, res) => {
+  try {
+    const storyId = req.params.id;
+    const { text, author, createdAt } = req.body;
+
+    const comment = await Comment.create({
+      text,
+      author,
+      story: storyId,
+      createdAt,
+    });
+
+    const story = await Story.findByIdAndUpdate(
+      storyId,
+      { $push: { comments: comment } },
+      { new: true }
+    )
+      .populate("author")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+          model: "User",
+        },
+      });
+
+    res.status(200).json({
+      status: "succcess",
+      data: story,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while adding the comment" });
+  }
+};
 
 const createStory = async (req, res) => {
   try {
@@ -30,57 +69,15 @@ const getAllStories = (req, res) => {
 };
 
 const getLatestStories = (req, res) => {
-  const stories = [
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "Hard Work vs Talent",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Bhakthishri",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "Hard Work vs Talent",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "Hard Work vs Talent",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "Hard Work vs Talent",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-  ];
-  res.json(stories);
+  Story.find({})
+    .populate("author")
+    .then((stories) => {
+      res.status(200).json({
+        status: "success",
+        data: stories,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const getStoriesByCategory = (req, res) => {
@@ -130,7 +127,18 @@ const getStoriesByUser = (req, res) => {
 const getStoryById = async (req, res) => {
   try {
     const storyId = req.params.id;
-    const story = await Story.findOne({ _id: storyId }).populate("author");
+    const story = await Story.findOne({ _id: storyId })
+      .populate("author")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+          model: "User",
+        },
+      });
+    // .populate("comments")
+
+    console.log(story);
     res.json({
       status: "success",
       data: story,
@@ -159,7 +167,6 @@ const authenticateUser = async (req, res) => {
   res.status(201).json(user);
 };
 
-// Export of all methods as object
 module.exports = {
   getAllStories,
   authenticateUser,
@@ -168,4 +175,5 @@ module.exports = {
   getStoriesByUser,
   createStory,
   getStoryById,
+  addComment,
 };

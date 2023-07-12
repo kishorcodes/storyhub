@@ -9,8 +9,8 @@ const LatestStories = () => {
   useEffect(() => {
     axios
       .get("/api/stories/latest")
-      .then((res) => {
-        setLatestStories(res.data);
+      .then(({ data: { data } }) => {
+        setLatestStories(data);
       })
       .catch((err) => {
         console.log(err);
@@ -33,11 +33,12 @@ const LatestStories = () => {
             return (
               <LatestStoryCard
                 key={index}
+                storyId = {story._id}
                 position={"0" + (index + 1)}
-                authorName={story.authorName}
-                authorImage={story.authorImage}
+                authorName={story.author.name}
+                authorImage={story.author.picture}
                 title={story.title}
-                publishDate={story.publishDate}
+                publishDate={story.publishedAt}
                 category={story.category}
               ></LatestStoryCard>
             );

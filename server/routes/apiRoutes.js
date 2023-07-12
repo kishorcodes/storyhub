@@ -9,5 +9,5 @@ router.get("/stories/latest", apiController.getLatestStories);
 router.post("/create", apiController.createStory);
 router.post("/auth/google", apiController.authenticateUser);
 router.get("/stories/:id", apiController.getStoryById);
-
+router.post("/stories/:id/comments", apiController.addComment);
 module.exports = router;

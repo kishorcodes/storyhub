@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema({
-  content: {
+  text: {
     type: String,
-    required: "Content field is required",
+    required: "content field is required",
   },
-  user: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  post: {
+  story: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Story",
   },

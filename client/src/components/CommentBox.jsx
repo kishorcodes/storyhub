@@ -1,16 +1,10 @@
 import Button from "./Button";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
-const CommentBox = ({ comments, setComments }) => {
+import axios from "axios";
+const CommentBox = ({ saveComment }) => {
   const [comment, setComment] = useState("");
-  const saveComment = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        setComments([...comments, comment]);
-        resolve();
-      }, 2000);
-    });
-  };
+
   return (
     <div class="mt-4 flex gap-3 w-full items-center">
       <input
@@ -27,7 +21,7 @@ const CommentBox = ({ comments, setComments }) => {
         bgColor="black"
         fgColor="white"
         onClick={() => {
-          toast.promise(saveComment(), {
+          toast.promise(saveComment(comment), {
             loading: "Commenting...",
             success: <b>Comment added</b>,
             error: <b>Could not add comment.</b>,

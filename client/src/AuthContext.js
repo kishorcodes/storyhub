@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
               resolve();
               console.log(data);
               setUserProfile(data);
+              
               localStorage.setItem("userProfile", JSON.stringify(data));
               setIsLoggedIn(true);
             })

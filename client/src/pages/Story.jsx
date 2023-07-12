@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import bookmark from "../assets/images/bookmark2.svg";
 import flash from "../assets/images/flash.svg";
@@ -11,9 +11,14 @@ import smile from "../assets/images/smile.svg";
 import twitter from "../assets/images/twitter.svg";
 import whatsapp from "../assets/images/whatsapp.svg";
 import Comments from "../components/Comments";
+import MoonLoader from "../components/MoonLoader";
 import Navbar from "../components/Navbar";
 import ReadmoreCard from "../components/ReadmoreCard";
+import { AuthContext } from "../AuthContext";
+import convertTimestampToFormat from "../utils/convertTimestampToFormat";
 const Story = () => {
+  const { userProfile } = useContext(AuthContext);
+  const userId = userProfile._id;
   const [story, setStory] = useState(null);
   const { id } = useParams();
   useEffect(() => {
@@ -50,17 +55,21 @@ const Story = () => {
                 <div className="flex end gap-3 sm:gap-0 justify-between px-4 lg:px-12 lg:py-8 py-8">
                   <div className="user flex justify-start items-center gap-4">
                     <img
-                      src="https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80"
-                      alt=""
+                      src={story.author.picture}
+                      alt="user"
                       className="rounded-full h-[35px] w-[35px] md:h-[48px] md:w-[48px]"
                     />
                     <div className="flex flex-col">
-                      <p className="text-md font-medium">{story.author.name}</p>
-                      <div className="flex gap-4 justify-center items-center">
+                      <p className="cursor-pointer text-md font-medium">
+                        {story.author.name}
+                      </p>
+                      <div className="flex justify-center items-center">
                         <p className="text-xs lg:text-sm font-light">
-                          {story.publishedAt}
+                          {convertTimestampToFormat(story.publishedAt)}
+                          &nbsp;&nbsp;•
                         </p>
-                        <div className="text-xs lg:text-sm font-light rounded-lg">
+                        &nbsp;&nbsp;
+                        <div className="cursor-pointer text-xs lg:text-sm font-light rounded-lg">
                           {story.category}
                         </div>
                       </div>
@@ -75,12 +84,12 @@ const Story = () => {
                   </div>
                 </div>
 
-                <div className="content flex flex-col gap-5 px-4 lg:px-12">
+                <div className="border-b border-cyan content flex flex-col gap-5 px-4 lg:px-12">
                   <h1 className="text-2xl lg:text-4xl">{story.title}</h1>
                   <p className="text-md lg:text-2xl font-normal text-[gray]">
                     {story.subtitle}
                   </p>
-                  <div className="gap-8 pb-5 border-b border-cyan flex flex-col">
+                  <div className="gap-8 pb-5 flex flex-col">
                     <p
                       dangerouslySetInnerHTML={{ __html: story.content }}
                       className="text-sm font-normal lg:text-md leading-8"
@@ -140,7 +149,7 @@ const Story = () => {
                   </div>
                 </div>
               </div>
-              <Comments></Comments>
+              <Comments storyId={story._id} userId={userId}></Comments>
             </div>
             <div className="border-t border-cyan hidden lg:flex flex-col justify-start items-center w-[400px] h-[700px]">
               <div className="border-b border-cyan relative py-24 px-1 flex w-[100%] h-[150px] flex-col items-center justify-center">
@@ -163,7 +172,9 @@ const Story = () => {
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <MoonLoader></MoonLoader>
+      )}
     </>
   );
 };
