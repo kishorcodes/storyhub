@@ -1,5 +1,5 @@
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import axios from "./axios";
 import React, { createContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import useDidMountEffect from "./hooks/useDidMountEffect";

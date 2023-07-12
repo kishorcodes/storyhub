@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import close from "../assets/images/close.svg";
 import Button from "./Button";
-import axios from "axios";
+import axios from "../axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

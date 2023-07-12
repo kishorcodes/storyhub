@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import tick from "../assets/images/tick.svg";
 import Discover from "./Discover";
 import StoryCard from "./StoryCard";
-import axios from "axios";
+import axios from "../axios";
 const Reccomended = () => {
   const [reccomended, setReccomended] = useState([]);
   useEffect(() => {

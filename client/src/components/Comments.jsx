@@ -1,7 +1,7 @@
 import Comment from "./Comment";
 import CommentBox from "./CommentBox";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axios";
 const Comments = ({ userId, storyId }) => {
   const [comments, setComments] = useState();
   useEffect(() => {
