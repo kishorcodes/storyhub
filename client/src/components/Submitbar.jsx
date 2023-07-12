@@ -9,12 +9,7 @@ export default function Submitbar({ showDraftSaved, setPublishMode }) {
     <Disclosure as="nav" className="font-arial">
       {({ open }) => (
         <>
-          <div
-            className="px-3 py-1.5"
-            onClick={() => {
-              console.log(showDraftSaved);
-            }}
-          >
+          <div className="px-3 py-1.5">
             <div className="flex h-16 items-center justify-between lg:justify-around">
               <div className="cursor-pointer flex items-center justify-between sm:items-stretch sm:justify-start">
                 <div

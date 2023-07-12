@@ -15,8 +15,8 @@ const Comments = () => {
       <h1 className="self-start mb-5 text-xl lg:text-2xl font-normal">
         Comments
       </h1>
-      {comments.map((comment) => {
-        return <Comment text={comment} />;
+      {comments.map((comment, index) => {
+        return <Comment key={index} text={comment} />;
       })}
 
       <CommentBox comments={comments} setComments={setComments}></CommentBox>

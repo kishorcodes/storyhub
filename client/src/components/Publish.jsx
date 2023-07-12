@@ -1,7 +1,18 @@
-import { useEffect } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../AuthContext";
 import close from "../assets/images/close.svg";
 import Button from "./Button";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 const Publish = ({ setPublishMode, content }) => {
+  const navigate = useNavigate();
+  const { userProfile } = useContext(AuthContext);
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [category, setCategory] = useState("Personal");
+
   const categories = [
     "Personal",
     "Finance",
@@ -15,11 +26,40 @@ const Publish = ({ setPublishMode, content }) => {
     "Others",
   ];
 
-  useEffect(() => {
-    window.onpopstate = (e) => {
-      console.log("pressed");
-    };
-  });
+  const createStory = () => {
+    return new Promise((resolve, reject) => {
+      const newStory = {
+        title,
+        subtitle,
+        content,
+        author: userProfile._id,
+        category,
+        publishedAt: new Date(),
+        reactions: {
+          heart: 0,
+          smile: 0,
+          flash: 0,
+          shock: 0,
+          sad: 0,
+        },
+        comments: [],
+      };
+
+      axios
+        .post("/api/create", newStory)
+        .then(({ data: { data } }) => {
+          console.log(data);
+          const storyId = data._id;
+          console.log(storyId);
+          navigate(`/api/stories/${storyId}`);
+          resolve();
+        })
+        .catch((err) => {
+          reject();
+        });
+    });
+  };
+
   return (
     <>
       <img
@@ -30,6 +70,7 @@ const Publish = ({ setPublishMode, content }) => {
           setPublishMode(false);
         }}
       />
+
       <div className="px-5 py-5 lg:p-28 flex flex-col md:flex-row items-center justify-center gap-10 min-h-[80vh] w-[100%]">
         <div className="flex flex-col justify-start gap-5 w-[100%] ">
           <p className="text-md font-semibold">Story Preview</p>
@@ -38,11 +79,17 @@ const Publish = ({ setPublishMode, content }) => {
             className="p-5 rounded-md bg-[#F1F5F9] min-h-[250px] h-fit w-[100%]"
           ></div>
           <input
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
             type="text"
             class="placeholder:bold w-full text-lg border-b-2 border-gray-400 outline-none focus:border-blue-400"
             placeholder="Write a preview title"
           />
           <input
+            onChange={(e) => {
+              setSubtitle(e.target.value);
+            }}
             type="text"
             class="w-full text-sm border-b-2 border-gray-400 outline-none focus:border-blue-400"
             placeholder="Write a preview subtitle..."
@@ -74,10 +121,10 @@ const Publish = ({ setPublishMode, content }) => {
             >
               <option>Choose a country</option>
 
-              {categories.map((category) => {
+              {categories.map((categ) => {
                 return (
-                  <option selected={category === "Personal"} value={category}>
-                    {category}
+                  <option selected={categ === category} value={categ}>
+                    {categ}
                   </option>
                 );
               })}
@@ -95,7 +142,12 @@ const Publish = ({ setPublishMode, content }) => {
               bgColor={"green-600"}
               fgColor={"white"}
               onClick={() => {
-                console.log("publishing...");
+                toast.promise(createStory(), {
+                  loading: "Publishing...",
+                  success: <b>Story published!</b>,
+
+                  error: <b>Could not publish story.</b>,
+                });
               }}
             />
           </div>

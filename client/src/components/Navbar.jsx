@@ -4,18 +4,18 @@ import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import logo from "../assets/images/logo.svg";
-const navigation = [
-  { name: "Write Your Story", href: "/write", current: true },
-  { name: "About Us", href: "/about", current: false },
-  { name: "Stories", href: "/stories", current: false },
-  { name: "Contact Us", href: "#", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = ({ color, bordered, theme }) => {
+  const navigation = [
+    { name: "Write Your Story", href: "/write" },
+    { name: "About Us", href: "/about" },
+    { name: "Stories", href: "/stories" },
+    { name: "Contact Us", href: "/contact" },
+  ];
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   let disclosureClasses = "font-arial bg-" + color;
@@ -46,7 +46,9 @@ const Navbar = ({ color, bordered, theme }) => {
                     alt="Your Company"
                   />
 
-                  <h1 className="font-bold ml-1 text-md font-medium">STORYHUB</h1>
+                  <h1 className="font-bold ml-1 text-md font-medium">
+                    STORYHUB
+                  </h1>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -57,9 +59,7 @@ const Navbar = ({ color, bordered, theme }) => {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current
-                            ? "bg-[#292C2E] text-white"
-                            : "hover:bg-gray-700 hover:text-white",
+                          "hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-normal"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -248,9 +248,7 @@ const Navbar = ({ color, bordered, theme }) => {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current
-                      ? "bg-[#292C2E] text-white"
-                      : "hover:bg-gray-700",
+                    "hover:bg-gray-700",
                     "block rounded-md px-3 py-2 text-base font-normal"
                   )}
                   aria-current={item.current ? "page" : undefined}

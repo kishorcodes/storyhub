@@ -1,16 +1,16 @@
-import bookmark from "../assets/images/bookmark2.svg";
-import whatsapp from "../assets/images/whatsapp.svg";
-import twitter from "../assets/images/twitter.svg";
-import link from "../assets/images/link.svg";
-import ReadmoreCard from "../components/ReadmoreCard";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Comments from "../components/Comments";
-import heart from "../assets/images/heart.svg";
-import happy from "../assets/images/happy.svg";
+import bookmark from "../assets/images/bookmark2.svg";
 import flash from "../assets/images/flash.svg";
-import shock from "../assets/images/shock.svg";
+import smile from "../assets/images/smile.svg";
+import heart from "../assets/images/heart.svg";
+import link from "../assets/images/link.svg";
 import sad from "../assets/images/sad.svg";
+import shock from "../assets/images/shock.svg";
+import twitter from "../assets/images/twitter.svg";
+import whatsapp from "../assets/images/whatsapp.svg";
+import Comments from "../components/Comments";
+import Navbar from "../components/Navbar";
+import ReadmoreCard from "../components/ReadmoreCard";
 
 const Story = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Story = () => {
             </div>
           </div>
           <div className="flex flex-col items-between justify-center">
-            <div className="flex flex-col items-start gap-3 sm:gap-0 sm:flex-row sm:items-end justify-between px-4 lg:px-12 lg:py-8 py-8">
+            <div className="flex end gap-3 sm:gap-0 justify-between px-4 lg:px-12 lg:py-8 py-8">
               <div className="user flex justify-start items-center gap-4">
                 <img
                   src="https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80"
@@ -122,7 +122,7 @@ const Story = () => {
                       className="scale-100 hover:scale-105 transition-all duration-75"
                       height={50}
                       width={50}
-                      src={happy}
+                      src={smile}
                       alt="heart"
                     />
                     <p>6</p>

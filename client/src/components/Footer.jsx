@@ -32,7 +32,9 @@ const Footer = () => {
 
       <p className="text-white text-sm font-normal lg:text-lg">
         Made with 💙 in India by{" "}
-        <a className="underline" href="https://github.com/kishorcodes">Kishor</a>{" "}
+        <a className="underline" href="https://github.com/kishorcodes">
+          Kishor
+        </a>{" "}
       </p>
     </div>
   );

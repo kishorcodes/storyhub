@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const storedProfile = localStorage.getItem("userProfile");
   const initialProfile = storedProfile ? JSON.parse(storedProfile) : null;
   const initialLoggedIn = storedProfile ? true : false;
-  
+
   //states to keep track of user info and login state
   const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
   const [user, setUser] = useState(null);
@@ -26,12 +26,19 @@ export const AuthProvider = ({ children }) => {
             Accept: "application/json",
           },
         })
-        .then((res) => {
-          resolve(res.data);
-          console.log(res.data);
-          setUserProfile(res.data);
-          localStorage.setItem("userProfile", JSON.stringify(res.data));
-          setIsLoggedIn(true);
+        .then(({ data }) => {
+          axios
+            .post("/api/auth/google", data)
+            .then(({ data }) => {
+              resolve();
+              console.log(data);
+              setUserProfile(data);
+              localStorage.setItem("userProfile", JSON.stringify(data));
+              setIsLoggedIn(true);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch(() => reject());
     });
