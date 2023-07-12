@@ -51,7 +51,7 @@ const Publish = ({ setPublishMode, content }) => {
           console.log(data);
           const storyId = data._id;
           console.log(storyId);
-          navigate(`/api/stories/${storyId}`);
+          navigate(`/stories/${storyId}`);
           resolve();
         })
         .catch((err) => {
