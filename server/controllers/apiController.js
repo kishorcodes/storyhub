@@ -212,6 +212,19 @@ const getStoriesByUser = (req, res) => {
   res.json(stories);
 };
 
+const getStoryById = async (req, res) => {
+  try {
+    const storyId = req.params.id;
+    const story = await Story.findOne({ _id: storyId }).populate("author");
+    res.json({
+      status: "success",
+      data: story,
+    });
+  } catch (err) {
+    res.json({ status: "error" });
+  }
+};
+
 const authenticateUser = async (req, res) => {
   const email = req.body.email;
   const name = req.body.name;
@@ -239,4 +252,5 @@ module.exports = {
   getStoriesByCategory,
   getStoriesByUser,
   createStory,
+  getStoryById,
 };
