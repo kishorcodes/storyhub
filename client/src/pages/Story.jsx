@@ -18,7 +18,7 @@ import { AuthContext } from "../AuthContext";
 import convertTimestampToFormat from "../utils/convertTimestampToFormat";
 const Story = () => {
   const { userProfile } = useContext(AuthContext);
-  const userId = userProfile._id;
+  const userId = userProfile?._id;
   const [story, setStory] = useState(null);
   const { id } = useParams();
   useEffect(() => {
@@ -26,12 +26,9 @@ const Story = () => {
       axios
         .get(`/api/stories/${id}`)
         .then(({ data: { data } }) => {
-          console.log(data);
           setStory(data);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     }
   }, []);
   const navigate = useNavigate();

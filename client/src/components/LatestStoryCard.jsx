@@ -11,7 +11,7 @@ const LatestStoryCard = ({
 }) => {
   return (
     <Link to={`/stories/${storyId}`}>
-      <div className="flex w-fit max-w-[400px] gap-7 cursor-pointer">
+      <div className="flex w-[320px] gap-7 cursor-pointer">
         <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
         <div className="p-1 gap-3 flex flex-col justify-start">
           <div className="user flex justify-start items-center gap-3">
@@ -28,7 +28,7 @@ const LatestStoryCard = ({
             <p className="text-sm font-light">
               {convertTimestampToFormat(publishDate)}
             </p>
-            <div className="text-sm font-light border p-1 border-cyan rounded-lg">
+            <div className="text-xs font-light p-1 border p-1 border-cyan rounded-lg">
               {category}
             </div>
           </div>

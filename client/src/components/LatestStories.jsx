@@ -12,16 +12,14 @@ const LatestStories = () => {
       .then(({ data: { data } }) => {
         setLatestStories(data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   }, []);
 
   return (
     <>
       {latestStories ? (
-        <div className="grid relative grid-rows-6 md:grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-start md:place-items-center gap-10 px-6 lg:px-2 pt-24 pb-16">
-          <p className="flex absolute top-11 left-5 lg:left-16 items-center text-sm font-medium justify-center gap-1">
+        <div className="grid relative grid-rows-6 md:grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 justify-items-start md:justify-items-center gap-4 px-3 md:px-4 pt-24 pb-10">
+          <p className="flex absolute top-11 left-5 lg:left-20 items-center text-sm font-medium justify-center gap-1">
             <img
               src={arrow}
               className="h-[20px] w-[20px]"
@@ -33,7 +31,7 @@ const LatestStories = () => {
             return (
               <LatestStoryCard
                 key={index}
-                storyId = {story._id}
+                storyId={story._id}
                 position={"0" + (index + 1)}
                 authorName={story.author.name}
                 authorImage={story.author.picture}

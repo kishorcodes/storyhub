@@ -10,7 +10,7 @@ const Comments = ({ userId, storyId }) => {
       .then(({ data: { data } }) => {
         setComments(data.comments);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, []);
   const saveComment = (comment) => {
     return new Promise((resolve, reject) => {
@@ -44,7 +44,6 @@ const Comments = ({ userId, storyId }) => {
           </h1>
           <div className=" rounded-xl w-[100%]">
             {comments.map((comment, index) => {
-              console.log(userId);
               return (
                 <Comment
                   key={index}

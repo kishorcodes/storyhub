@@ -48,9 +48,7 @@ const Publish = ({ setPublishMode, content }) => {
       axios
         .post("/api/create", newStory)
         .then(({ data: { data } }) => {
-          console.log(data);
           const storyId = data._id;
-          console.log(storyId);
           navigate(`/stories/${storyId}`);
           resolve();
         })
@@ -102,7 +100,7 @@ const Publish = ({ setPublishMode, content }) => {
         </div>
 
         <div className="flex flex-col gap-5 w-[100%]">
-          <div className="flex gap-3 items-center justify-start">
+          {/* <div className="flex gap-3 items-center justify-start">
             <p className="text-md font-semibold">Publishing to: </p>
 
             <input
@@ -110,7 +108,7 @@ const Publish = ({ setPublishMode, content }) => {
               class="placeholder:bold w-50 text-md border-b-2 border-gray-400 outline-none focus:border-blue-400"
               placeholder="Your Name"
             />
-          </div>
+          </div> */}
           <p className="text-sm">
             Choose topic so readers know what your story is about
           </p>
