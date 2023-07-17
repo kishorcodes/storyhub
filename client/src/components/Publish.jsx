@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import close from "../assets/images/close.svg";
 import Button from "./Button";
@@ -12,7 +12,7 @@ const Publish = ({ setPublishMode, content }) => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [category, setCategory] = useState("Personal");
-
+  const [thumbnail, setThumbnail] = useState(null);
   const categories = [
     "Personal",
     "Finance",
@@ -32,6 +32,7 @@ const Publish = ({ setPublishMode, content }) => {
         title,
         subtitle,
         content,
+        thumbnail,
         author: userProfile._id,
         category,
         publishedAt: new Date(),
@@ -58,6 +59,18 @@ const Publish = ({ setPublishMode, content }) => {
     });
   };
 
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.unsplash.com/photos/random/?client_id=EcA3PWnVrPvszvIvY6OPSmQrzJWNXHo_RFaAaZI6_Ds&query=nature"
+      )
+      .then(({ data: { urls } }) => {
+        setThumbnail(urls.thumb);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <img
@@ -100,15 +113,7 @@ const Publish = ({ setPublishMode, content }) => {
         </div>
 
         <div className="flex flex-col gap-5 w-[100%]">
-          {/* <div className="flex gap-3 items-center justify-start">
-            <p className="text-md font-semibold">Publishing to: </p>
-
-            <input
-              type="text"
-              class="placeholder:bold w-50 text-md border-b-2 border-gray-400 outline-none focus:border-blue-400"
-              placeholder="Your Name"
-            />
-          </div> */}
+       
           <p className="text-sm">
             Choose topic so readers know what your story is about
           </p>

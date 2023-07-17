@@ -1,6 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-const MarkdownEditor = ({ setEditorLoaded, setShowDraftSaved, editorRef }) => {
+const MarkdownEditor = ({ setEditorLoaded, editorRef }) => {
   const tinyMceAPIKey = process.env.REACT_APP_TINYMCE_API_KEY;
   const initialValue = localStorage.getItem("draftContent") || "";
 

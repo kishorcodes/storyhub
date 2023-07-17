@@ -3,7 +3,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
-import logo from "../assets/images/logo.svg";
+import Logo from "./Logo";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,27 +29,7 @@ const Navbar = ({ color, bordered, theme }) => {
           <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
-                <div
-                  className="flex justify-center items-center gap-1"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  <img
-                    className="block rounded-full h-8 w-auto lg:hidden"
-                    src={logo}
-                    alt="Your Company"
-                  />
-                  <img
-                    className="hidden rounded-full h-8 w-auto lg:block"
-                    src={logo}
-                    alt="Your Company"
-                  />
-
-                  <h1 className="font-bold ml-1 text-md font-medium">
-                    STORYHUB
-                  </h1>
-                </div>
+              <Logo></Logo>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="hidden sm:ml-6 sm:block">

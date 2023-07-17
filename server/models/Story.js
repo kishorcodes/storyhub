@@ -13,6 +13,10 @@ const storySchema = new mongoose.Schema({
     type: String,
     required: "This field is required",
   },
+  thumbnail: {
+    type: String,
+    required: "This field is required",
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

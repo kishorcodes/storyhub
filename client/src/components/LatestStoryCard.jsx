@@ -1,37 +1,42 @@
 import { Link } from "react-router-dom";
-import convertTimestampToFormat from "../utils/convertTimestampToFormat";
+import convertTimestampToFormat from "../utils/convertTimestampToText";
+
 const LatestStoryCard = ({
   storyId,
   position,
   title,
-  authorName,
-  authorImage,
+  author,
   category,
   publishDate,
 }) => {
-  return (
-    <Link to={`/stories/${storyId}`}>
-      <div className="flex w-[320px] gap-7 cursor-pointer">
-        <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
-        <div className="p-1 gap-3 flex flex-col justify-start">
-          <div className="user flex justify-start items-center gap-3">
-            <img
-              className="w-[20px] h-[20px] rounded-sm"
-              src={authorImage}
-              alt=""
-            />
-            <p className="text-sm font-medium">{authorName}</p>
-          </div>
-          <p className="text-md font-medium">{title}</p>
+  const formattedPublishDate = convertTimestampToFormat(publishDate);
 
-          <div className="flex gap-4 justify-content items-center">
-            <p className="text-sm font-light">
-              {convertTimestampToFormat(publishDate)}
-            </p>
-            <div className="text-xs font-light p-1 border p-1 border-cyan rounded-lg">
+  return (
+    <Link
+      to={`/stories/${storyId}`}
+      className="flex w-[320px] gap-7 cursor-pointer"
+    >
+      <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
+      <div className="p-1 gap-3 flex flex-col justify-start">
+        <div className="user flex justify-start items-center gap-3">
+          <img
+            className="w-[20px] h-[20px] rounded-sm"
+            src={author.picture}
+            alt="author"
+          />
+          <Link to={`/user/${author._id}`}>
+            <p className="text-sm font-medium">{author.name}</p>
+          </Link>
+        </div>
+        <p className="text-md font-medium">{title}</p>
+        <div className="flex gap-4 justify-content items-center">
+          <p className="text-sm font-light">{formattedPublishDate}</p>
+
+          <Link to={`/category/${category}`}>
+            <div className="text-xs font-light p-1 border border-cyan rounded-lg">
               {category}
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </Link>

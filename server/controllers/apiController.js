@@ -71,6 +71,7 @@ const getAllStories = (req, res) => {
 const getLatestStories = (req, res) => {
   Story.find({})
     .populate("author")
+    .limit(6)
     .then((stories) => {
       res.status(200).json({
         status: "success",
@@ -124,6 +125,47 @@ const getStoriesByUser = (req, res) => {
   res.json(stories);
 };
 
+const updateReactionCount = async (req, res) => {
+  try {
+    const storyId = req.params.id;
+    const reactionType = req.body.reactionType;
+    const story = await Story.findOne({ _id: storyId }).populate("author");
+
+    if (!story) {
+      return console.log("Story not found");
+    }
+
+    switch (reactionType) {
+      case "heart":
+        story.reactions.heart += 1;
+        break;
+      case "smile":
+        story.reactions.smile += 1;
+        break;
+      case "flash":
+        story.reactions.flash += 1;
+        break;
+      case "shock":
+        story.reactions.shock += 1;
+        break;
+      case "sad":
+        story.reactions.sad += 1;
+        break;
+      default:
+        return console.log("Invalid reaction type");
+    }
+
+    const updatedStory = await story.save();
+    res.json({
+      status: "success",
+      data: updatedStory,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error" });
+  }
+};
+
 const getStoryById = async (req, res) => {
   try {
     const storyId = req.params.id;
@@ -136,9 +178,7 @@ const getStoryById = async (req, res) => {
           model: "User",
         },
       });
-    // .populate("comments")
 
-    console.log(story);
     res.json({
       status: "success",
       data: story,
@@ -176,4 +216,5 @@ module.exports = {
   createStory,
   getStoryById,
   addComment,
+  updateReactionCount,
 };

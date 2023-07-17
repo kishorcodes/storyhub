@@ -1,32 +1,41 @@
-import Button from "./Button";
-import { toast } from "react-hot-toast";
 import { useState } from "react";
-import axios from "../axios";
+import { toast } from "react-hot-toast";
+import Button from "./Button";
+
 const CommentBox = ({ saveComment }) => {
   const [comment, setComment] = useState("");
 
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    toast.promise(saveComment(comment), {
+      loading: "Commenting...",
+      success: () => {
+        setComment("");
+        return <b>Comment added</b>;
+      },
+      error: <b>Could not add comment.</b>,
+    });
+  };
+
   return (
-    <div class="mt-4 flex gap-3 w-full items-center">
+    <div className=" flex items-center gap-3 w-full mt-4">
       <input
         value={comment}
         type="text"
+        placeholder="Say what's on your mind..."
         id="large-input"
-        onChange={(e) => {
-          setComment(e.target.value);
-        }}
-        class="block w-full p-4 text-gray-900 border border-black rounded-lg sm:text-md"
+        onChange={handleCommentChange}
+        className="block w-full p-4 text-gray-900 border border-black rounded-lg sm:text-md"
       />
       <Button
         text="Comment"
         bgColor="black"
         fgColor="white"
-        onClick={() => {
-          toast.promise(saveComment(comment), {
-            loading: "Commenting...",
-            success: <b>Comment added</b>,
-            error: <b>Could not add comment.</b>,
-          });
-        }}
+        additionalClasses="h-[100%]"
+        onClick={handleCommentSubmit}
       />
     </div>
   );

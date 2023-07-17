@@ -1,60 +1,79 @@
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import bookmark from "../assets/images/bookmark.svg";
-import convertTimestampToFormat from "../utils/convertTimestampToFormat";
+import convertTimestampToText from "../utils/convertTimestampToText";
 const StoryCard = ({
   storyId,
   author,
-  authorPicture,
+  thumbnail,
   title,
   subtitle,
   category,
   publishedAt,
 }) => {
-  const navigate = useNavigate();
+  
+  const saveBookmark = (storyId) => {
+    return new Promise((resolve, reject) => {
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+      if (bookmarks.includes(storyId)) reject();
+      else {
+        bookmarks.push(storyId);
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+        resolve();
+      }
+    });
+  };
 
   return (
     <div className="flex justify-between items-center">
-      <div
-        onClick={() => navigate(`/stories/${storyId}`)}
-        className="p-1  flex w-[75%] flex-col"
-      >
-        <div className="user flex justify-start items-center gap-2">
+      <div className="flex flex-col w-[75%] p-1">
+        <div className="flex justify-start items-center gap-2">
           <img
-            src={authorPicture}
+            src={author.picture}
             alt="author-profile"
-            className="rounded-full h-[32px] w-[32px]"
+            className="h-[32px] w-[32px] rounded-full"
           />
-          <p className="text-md font-medium">{author}</p>
+          <Link to={`/user/${author._id}`}>
+            <p className="text-md font-medium">{author.name}</p>
+          </Link>
         </div>
-        <div className="pr-5 flex flex-col gap-1.5 mt-2.5">
-          <p className="text-sm lg:text-xl font-medium cursor-pointer">
-            {title}
-          </p>
-          <p className="text-sm font-normal cursor-pointer">{subtitle}</p>
-        </div>
+        <Link to={`/stories/${storyId}`}>
+          <div className="flex flex-col pr-5 gap-1.5 mt-2.5">
+            <p className="text-sm lg:text-xl font-medium cursor-pointer">
+              {title}
+            </p>
+            <p className="text-sm font-normal cursor-pointer">{subtitle}</p>
+          </div>
+        </Link>
+
         <div className="flex justify-between items-center w-100">
-          <div className="flex gap-4 justify-center items-center">
+          <div className="flex justify-center items-center gap-4">
             <p className="text-sm font-light">
-              {convertTimestampToFormat(publishedAt)}&nbsp;&nbsp;•&nbsp;&nbsp;
-              {category}
+              {convertTimestampToText(publishedAt)}&nbsp;&nbsp;•&nbsp;&nbsp;
+              <Link to={`/category/${category}`}>{category}</Link>
             </p>
           </div>
 
           <img
-            className="mr-6 cursor-pointer hover:scale-105 duration-75 transition-all"
+            className="transition-all hover:scale-105 duration-75 mr-6 cursor-pointer"
             src={bookmark}
             height={30}
             width={30}
-            alt="bookmark-icon"
-            onClick={() => toast.success("Successfully Added")}
+            alt="bookmark"
+            onClick={() =>
+              toast.promise(saveBookmark(storyId), {
+                loading: "Saving bookmark...",
+                success: <b>Bookmark saved!</b>,
+                error: <b>Bookmark already exists.</b>,
+              })
+            }
           />
         </div>
       </div>
       <img
-        className="h-[140px] w-[250px] rounded-md"
-        src="https://source.unsplash.com/random"
-        alt="random"
+        className="w-auto h-auto rounded-md"
+        src={thumbnail}
+        alt="story-thumbnail"
       />
     </div>
   );

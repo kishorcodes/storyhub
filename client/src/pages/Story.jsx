@@ -1,6 +1,6 @@
-import axios from "../axios";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 import bookmark from "../assets/images/bookmark2.svg";
 import flash from "../assets/images/flash.svg";
 import heart from "../assets/images/heart.svg";
@@ -10,17 +10,18 @@ import shock from "../assets/images/shock.svg";
 import smile from "../assets/images/smile.svg";
 import twitter from "../assets/images/twitter.svg";
 import whatsapp from "../assets/images/whatsapp.svg";
+import axios from "../axios";
 import Comments from "../components/Comments";
 import MoonLoader from "../components/MoonLoader";
 import Navbar from "../components/Navbar";
 import ReadmoreCard from "../components/ReadmoreCard";
-import { AuthContext } from "../AuthContext";
-import convertTimestampToFormat from "../utils/convertTimestampToFormat";
+import convertTimestampToFormat from "../utils/convertTimestampToText";
 const Story = () => {
   const { userProfile } = useContext(AuthContext);
   const userId = userProfile?._id;
   const [story, setStory] = useState(null);
   const { id } = useParams();
+  const reactions = ["heart", "smile", "flash", "shock", "sad"];
   useEffect(() => {
     if (id) {
       axios
@@ -33,6 +34,22 @@ const Story = () => {
   }, []);
   const navigate = useNavigate();
 
+  const getReactionIcon = (type) => {
+    switch (type) {
+      case "heart":
+        return heart;
+      case "smile":
+        return smile;
+      case "flash":
+        return flash;
+      case "shock":
+        return shock;
+      case "sad":
+        return sad;
+      default:
+        return;
+    }
+  };
   return (
     <>
       {story ? (
@@ -53,7 +70,7 @@ const Story = () => {
                   <div className="user flex justify-start items-center gap-4">
                     <img
                       src={story.author.picture}
-                      alt="user"
+                      alt="author"
                       className="rounded-full h-[35px] w-[35px] md:h-[48px] md:w-[48px]"
                     />
                     <div className="flex flex-col">
@@ -89,59 +106,31 @@ const Story = () => {
                   <div className="gap-8 pb-5 flex flex-col">
                     <p
                       dangerouslySetInnerHTML={{ __html: story.content }}
-                      className="text-sm font-normal lg:text-md leading-8"
+                      className="text-md font-normal lg:text-md leading-8"
                     ></p>
                     <div className="p-3 rounded-lg border border-cyan self-center flex gap-3 items-center justify-center">
-                      <div className="flex items-center justify-center">
-                        <img
-                          className="scale-100 hover:scale-105 transition-all duration-75"
-                          height={50}
-                          width={50}
-                          src={heart}
-                          alt="heart"
-                        />
-                        <p>{story.reactions.heart}</p>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <img
-                          className="scale-100 hover:scale-105 transition-all duration-75"
-                          height={50}
-                          width={50}
-                          src={smile}
-                          alt="heart"
-                        />
-                        <p>{story.reactions.smile}</p>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <img
-                          className="scale-100 hover:scale-105 transition-all duration-75"
-                          height={50}
-                          width={50}
-                          src={flash}
-                          alt="heart"
-                        />
-                        <p>{story.reactions.flash}</p>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <img
-                          className="scale-100 hover:scale-105 transition-all duration-75"
-                          height={50}
-                          width={50}
-                          src={shock}
-                          alt="heart"
-                        />
-                        <p>{story.reactions.shock}</p>
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <img
-                          className="scale-100 hover:scale-105 transition-all duration-75"
-                          height={50}
-                          width={50}
-                          src={sad}
-                          alt="heart"
-                        />
-                        <p>{story.reactions.sad}</p>
-                      </div>
+                      {reactions.map((type) => (
+                        <div className="flex items-center justify-center">
+                          <img
+                            onClick={() => {
+                              axios
+                                .post(`/api/stories/${id}/reaction`, {
+                                  reactionType: type,
+                                })
+                                .then(({ data: { data } }) => {
+                                  setStory(data);
+                                })
+                                .catch(() => {});
+                            }}
+                            className="scale-100 hover:scale-105 transition-all duration-75"
+                            height={50}
+                            width={50}
+                            src={getReactionIcon(type)}
+                            alt={type}
+                          />
+                          <p>{story.reactions[type]}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

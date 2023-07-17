@@ -2,8 +2,10 @@ import Comment from "./Comment";
 import CommentBox from "./CommentBox";
 import { useEffect, useState } from "react";
 import axios from "../axios";
+
 const Comments = ({ userId, storyId }) => {
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
+
   useEffect(() => {
     axios
       .get(`/api/stories/${storyId}`)
@@ -11,7 +13,8 @@ const Comments = ({ userId, storyId }) => {
         setComments(data.comments);
       })
       .catch(() => {});
-  }, []);
+  }, [storyId]);
+
   const saveComment = (comment) => {
     return new Promise((resolve, reject) => {
       axios
@@ -21,37 +24,29 @@ const Comments = ({ userId, storyId }) => {
           story: storyId,
           createdAt: new Date(),
         })
-        .then(
-          ({
-            data: {
-              data: { comments },
-            },
-          }) => {
-            setComments([...comments]);
-            resolve();
-          }
-        )
+        .then(({ data: { data: { comments } } }) => {
+          setComments([...comments]);
+          resolve();
+        })
         .catch(() => reject());
     });
   };
 
   return (
     <div className="flex flex-col items-center py-16 px-5 lg:px-12">
-      {comments && comments.length > 0 ? (
+      {comments.length > 0 ? (
         <>
           <h1 className="self-start mb-5 text-xl lg:text-2xl font-normal">
-            {comments.length} Comments
+            {comments.length} Comment{comments.length > 1 ? "s" : ""}
           </h1>
-          <div className=" rounded-xl w-[100%]">
-            {comments.map((comment, index) => {
-              return (
-                <Comment
-                  key={index}
-                  isOwnComment={comment.author._id === userId}
-                  comment={comment}
-                />
-              );
-            })}
+          <div className="rounded-xl w-full">
+            {comments.map((comment, index) => (
+              <Comment
+                key={index}
+                isOwnComment={comment.author._id === userId}
+                comment={comment}
+              />
+            ))}
           </div>
         </>
       ) : (
@@ -60,7 +55,7 @@ const Comments = ({ userId, storyId }) => {
         </h1>
       )}
 
-      <CommentBox saveComment={saveComment}></CommentBox>
+      <CommentBox saveComment={saveComment} />
     </div>
   );
 };
