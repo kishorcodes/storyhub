@@ -14,7 +14,7 @@ const LatestStoryCard = ({
   return (
     <Link
       to={`/stories/${storyId}`}
-      className="flex w-[320px] gap-7 cursor-pointer"
+      className="flex w-[370px] h-[130px] gap-7 cursor-pointer rounded-lg"
     >
       <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
       <div className="p-1 gap-3 flex flex-col justify-start">

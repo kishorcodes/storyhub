@@ -7,7 +7,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Story from "./pages/Story";
 import Write from "./pages/Write";
-
+import Stories from "./pages/Stories";
 const App = () => {
   const clientId = process.env.REACT_APP_CLIENT_ID;
   return (
@@ -20,6 +20,7 @@ const App = () => {
               <Route exact path="/" element={<Home />}></Route>
               <Route exact path="/write" element={<Write />}></Route>
               <Route exact path="/stories/:id" element={<Story />}></Route>
+              <Route exact path="/stories" element={<Stories />}></Route>
             </Routes>
           </ScrollToTop>
         </Router>

@@ -19,7 +19,7 @@ const Navbar = ({ color, bordered, theme }) => {
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   let disclosureClasses = "font-arial bg-" + color;
-  disclosureClasses += theme === "dark" ? " text-black" : " text-white";
+  disclosureClasses += "text-black"
   if (bordered) disclosureClasses += " border-b border-cyan";
   return (
     <Disclosure as="nav" className={disclosureClasses}>
@@ -29,7 +29,7 @@ const Navbar = ({ color, bordered, theme }) => {
           <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
-              <Logo></Logo>
+              <Logo/>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="hidden sm:ml-6 sm:block">
@@ -110,7 +110,7 @@ const Navbar = ({ color, bordered, theme }) => {
                         }}
                         href={"/"}
                         className={classNames(
-                          "text-white bg-[#7CB342] hover:bg-[#388E3C] hover:text-white",
+                          "text-white bg-[#0029FF] hover:bg-[#388E3C] hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={undefined}
@@ -183,7 +183,7 @@ const Navbar = ({ color, bordered, theme }) => {
                     }}
                     href={"/"}
                     className={classNames(
-                      "sm:hidden mr-10 text-white bg-[#7CB342] hover:bg-[#388E3C] hover:text-white",
+                      "sm:hidden mr-10 text-white bg-[#0029FF] hover:bg-[#388E3C] hover:text-white",
 
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}

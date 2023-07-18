@@ -12,13 +12,13 @@ const Home = () => {
   };
   return (
     <>
-      <Navbar color={"[#0667AE]"} bordered={false}></Navbar>
-      <div className="pt-5 md:pt-0 border-b border-black bg-[#0667AE] h-[550px] flex flex-col md:flex-row justify-between items-center md:pl-10 md:pr-28">
+      <Navbar color={"[#F6F6FF]"} bordered={false} theme={'dark'}></Navbar>
+      <div className="pt-5 md:pt-0 border-b border-[#DFDFE9] h-[550px] flex flex-col md:flex-row justify-between items-center md:pl-10 md:pr-28">
         <div className="px-6 lg:px-10 flex-col flex gap-5 lg:gap-7 h-[100%] items-start justify-center">
-          <h1 className="font-montse text-[#FFEB3B] text-3xl md:text-5xl xl:text-7xl">
+          <h1 className="font-montse font-medium text-3xl md:text-5xl xl:text-7xl">
             Share your story.
           </h1>
-          <p className="text-lg font-normal lg:text-xl text-white font-arial">
+          <p className="text-lg font-normal lg:text-xl text-[#482E5B] font-arial">
             Put your story out there and give words
             <br className="hidden md:block" />
             to your thoughts.
@@ -26,9 +26,9 @@ const Home = () => {
 
           <Button
             text="Start Reading"
-            bgColor={"[#7CB342]"}
+            bgColor={"[#0029FF]"}
             fgColor={"white"}
-            hoverColor={"[#388E3C]"}
+            hoverColor={"[#030B1A]"}
             onClick={scrollToReccomended}
           />
         </div>

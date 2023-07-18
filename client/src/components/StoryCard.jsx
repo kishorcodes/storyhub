@@ -25,7 +25,7 @@ const StoryCard = ({
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center border border-[#DFDFE9] text-black rounded-lg p-3">
       <div className="flex flex-col w-[75%] p-1">
         <div className="flex justify-start items-center gap-2">
           <img
@@ -71,7 +71,7 @@ const StoryCard = ({
         </div>
       </div>
       <img
-        className="w-auto h-auto rounded-md"
+        className="h-[140px] w-[250px] rounded-md"
         src={thumbnail}
         alt="story-thumbnail"
       />

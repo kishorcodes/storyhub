@@ -10,7 +10,7 @@ const Footer = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-between items-center lg:flex-row py-4 px-2 md:px-20 bg-black h-[165px]">
+    <div className="flex flex-col justify-between items-center lg:flex-row py-4 px-2 md:px-20 bg-[#11043A] h-[165px]">
       <div className="flex flex-col justify-center gap-5">
         <Link
           to={"/"}
