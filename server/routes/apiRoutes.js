@@ -11,5 +11,6 @@ router.post("/auth/google", apiController.authenticateUser);
 router.get("/stories/:id", apiController.getStoryById);
 router.post("/stories/:id/comments", apiController.addComment);
 router.post("/stories/:id/reaction", apiController.updateReactionCount);
+router.get("/user/:id", apiController.getStoriesByUser);
 
 module.exports = router;

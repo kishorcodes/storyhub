@@ -74,7 +74,17 @@ const Story = () => {
                       className="rounded-full h-[35px] w-[35px] md:h-[48px] md:w-[48px]"
                     />
                     <div className="flex flex-col">
-                      <p className="cursor-pointer text-md font-medium">
+                      <p
+                        onClick={() => {
+                          navigate(`/user/${story.author._id}`, {
+                            state: {
+                              title: `${story.author.name}'s stories`,
+                              apiUrl: `/api/user/${story.author._id}`,
+                            },
+                          });
+                        }}
+                        className="cursor-pointer text-md font-medium"
+                      >
                         {story.author.name}
                       </p>
                       <div className="flex justify-center items-center">

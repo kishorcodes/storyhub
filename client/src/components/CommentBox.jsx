@@ -21,14 +21,14 @@ const CommentBox = ({ saveComment }) => {
   };
 
   return (
-    <div className=" flex items-center gap-3 w-full mt-4">
+    <div className="flex items-center gap-3 w-full mt-4">
       <input
         value={comment}
         type="text"
         placeholder="Say what's on your mind..."
         id="large-input"
         onChange={handleCommentChange}
-        className="block w-full p-4 text-gray-900 border border-black rounded-lg sm:text-md"
+        className="block outline-none w-full p-4 border border-black rounded-lg sm:text-md"
       />
       <Button
         text="Comment"

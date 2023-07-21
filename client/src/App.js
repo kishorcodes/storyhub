@@ -13,14 +13,15 @@ const App = () => {
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <AuthProvider>
-        <Toaster></Toaster>
+        <Toaster />
         <Router>
           <ScrollToTop>
             <Routes>
-              <Route exact path="/" element={<Home />}></Route>
-              <Route exact path="/write" element={<Write />}></Route>
-              <Route exact path="/stories/:id" element={<Story />}></Route>
-              <Route exact path="/stories" element={<Stories />}></Route>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/write" element={<Write />}></Route>
+              <Route path="/stories/:id" element={<Story />}></Route>
+              <Route path="/stories" element={<Stories />}></Route>
+              <Route path="/user/:userId" element={<Stories />}></Route>
             </Routes>
           </ScrollToTop>
         </Router>

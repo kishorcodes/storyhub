@@ -28,7 +28,7 @@ const Home = () => {
             text="Start Reading"
             bgColor={"[#0029FF]"}
             fgColor={"white"}
-            hoverColor={"[#030B1A]"}
+            hoverColor={"[#001C8C]"}
             onClick={scrollToReccomended}
           />
         </div>

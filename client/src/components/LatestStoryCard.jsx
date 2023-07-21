@@ -16,7 +16,7 @@ const LatestStoryCard = ({
       to={`/stories/${storyId}`}
       className="flex w-[370px] h-[130px] gap-7 cursor-pointer rounded-lg"
     >
-      <p className="text-[#38BDF8] text-3xl font-extrabold">{position}</p>
+      <p className="text-[#5F79FC] text-3xl font-extrabold">{position}</p>
       <div className="p-1 gap-3 flex flex-col justify-start">
         <div className="user flex justify-start items-center gap-3">
           <img

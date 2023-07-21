@@ -9,27 +9,39 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Navbar = ({ color, bordered, theme }) => {
+const Navbar = () => {
   const navigation = [
     { name: "Write Your Story", href: "/write" },
-    { name: "About Us", href: "/about" },
+    { name: "Bookmarks", href: "/bookmarks" },
     { name: "Stories", href: "/stories" },
     { name: "Contact Us", href: "/contact" },
   ];
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  let disclosureClasses = "font-arial bg-" + color;
-  disclosureClasses += "text-black"
-  if (bordered) disclosureClasses += " border-b border-cyan";
+
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    login();
+  };
+
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    logout();
+  };
+
+  const handleNavigationClick = (href) => {
+    navigate(href);
+  };
+
   return (
-    <Disclosure as="nav" className={disclosureClasses}>
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div></div>
           <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
-              <Logo/>
+                <Logo />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="hidden sm:ml-6 sm:block">
@@ -38,10 +50,10 @@ const Navbar = ({ color, bordered, theme }) => {
                       <a
                         key={item.name}
                         href={item.href}
-                        className={classNames(
-                          "hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-normal"
-                        )}
+                        onClick={() => handleNavigationClick(item.href)}
+                        className={
+                          "hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-normal"
+                        }
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
@@ -85,10 +97,7 @@ const Navbar = ({ color, bordered, theme }) => {
                             <Menu.Item>
                               {({ active }) => (
                                 <a
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    logout();
-                                  }}
+                                  onClick={handleLogoutClick}
                                   href="/"
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
@@ -104,13 +113,10 @@ const Navbar = ({ color, bordered, theme }) => {
                       </Menu>
                     ) : (
                       <a
-                        onClick={(e) => {
-                          login();
-                          e.preventDefault();
-                        }}
+                        onClick={handleLoginClick}
                         href={"/"}
                         className={classNames(
-                          "text-white bg-[#0029FF] hover:bg-[#388E3C] hover:text-white",
+                          "text-white bg-[#0029FF] hover:bg-[#001C8C]",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={undefined}
@@ -158,10 +164,7 @@ const Navbar = ({ color, bordered, theme }) => {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              onClick={(e) => {
-                                logout();
-                                e.preventDefault();
-                              }}
+                              onClick={handleLogoutClick}
                               href="/"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -177,14 +180,10 @@ const Navbar = ({ color, bordered, theme }) => {
                   </Menu>
                 ) : (
                   <a
-                    onClick={(e) => {
-                      e.preventDefault();
-                      login();
-                    }}
+                    onClick={handleLoginClick}
                     href={"/"}
                     className={classNames(
-                      "sm:hidden mr-10 text-white bg-[#0029FF] hover:bg-[#388E3C] hover:text-white",
-
+                      "sm:hidden mr-10 text-white bg-[#0029FF] hover:bg-[#001C8C]",
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}
                     aria-current={undefined}
@@ -197,6 +196,7 @@ const Navbar = ({ color, bordered, theme }) => {
                   <a
                     key={55}
                     href={"/write"}
+                    onClick={() => handleNavigationClick("/write")}
                     className={classNames(
                       "bg-gray-900 text-white mr-10 sm:hidden",
                       "rounded-md px-3 py-2 text-sm font-medium"
@@ -227,10 +227,10 @@ const Navbar = ({ color, bordered, theme }) => {
                   key={item.name}
                   as="a"
                   href={item.href}
-                  className={classNames(
-                    "hover:bg-gray-700",
-                    "block rounded-md px-3 py-2 text-base font-normal"
-                  )}
+                  onClick={() => handleNavigationClick(item.href)}
+                  className={
+                    "hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-normal"
+                  }
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}

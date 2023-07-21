@@ -45,11 +45,15 @@ const createStory = async (req, res) => {
   try {
     const newStory = new Story(req.body);
     const savedStory = await newStory.save();
+    const author = await User.findOne({ _id: req.body.author });
+    author.stories.push(savedStory._id);
+    await author.save();
     res.json({
       status: "success",
       data: savedStory,
     });
   } catch (err) {
+    console.log(err);
     res.status(403).json({
       status: "error",
     });
@@ -82,47 +86,36 @@ const getLatestStories = (req, res) => {
 };
 
 const getStoriesByCategory = (req, res) => {
-  const stories = [
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Avinash",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-  ];
-  res.json(stories);
+  const { category } = req.body;
+  Story.find({ category })
+    .populate("author")
+    .then((stories) => {
+      res.status(200).json({
+        status: "success",
+        data: stories,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const getStoriesByUser = (req, res) => {
-  const stories = [
-    {
-      authorName: "Kishor",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-    {
-      authorName: "Avinash",
-      authorImage:
-        "https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDE2NDd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODA5NDk2ODY&ixlib=rb-4.0.3&q=80&w=15",
-      title: "My Journey",
-      publishDate: "Mon Feb 13",
-      category: "Self Improvment",
-    },
-  ];
-  res.json(stories);
+  const userId = req.params.id;
+  User.findOne({ _id: userId })
+    .populate({
+      path: "stories",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    })
+    .then((user) => {
+      console.log(user);
+      res.status(200).json({
+        status: "success",
+        data: user.stories,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const updateReactionCount = async (req, res) => {
