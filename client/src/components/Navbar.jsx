@@ -2,7 +2,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import Logo from "./Logo";
 
 function classNames(...classes) {
@@ -17,6 +17,7 @@ const Navbar = () => {
     { name: "Contact Us", href: "/contact" },
   ];
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
+  const userId = userProfile?._id;
   const navigate = useNavigate();
 
   const handleLoginClick = (e) => {
@@ -30,7 +31,19 @@ const Navbar = () => {
   };
 
   const handleNavigationClick = (href) => {
-    navigate(href);
+    if (href === "/stories")
+      navigate(href, {
+        state: { title: "Discover Stories", apiUrl: "/api/stories/all" },
+      });
+    else if (href === "/bookmarks") {
+      navigate(href, {
+        state: {
+          title: "Bookmarks",
+          apiUrl: "/api/bookmarks",
+          apiParams: { userId:userId },
+        },
+      });
+    }
   };
 
   return (

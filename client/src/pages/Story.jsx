@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
 import bookmark from "../assets/images/bookmark2.svg";
 import flash from "../assets/images/flash.svg";
 import heart from "../assets/images/heart.svg";
@@ -10,28 +9,32 @@ import shock from "../assets/images/shock.svg";
 import smile from "../assets/images/smile.svg";
 import twitter from "../assets/images/twitter.svg";
 import whatsapp from "../assets/images/whatsapp.svg";
-import axios from "../axios";
 import Comments from "../components/Comments";
 import MoonLoader from "../components/MoonLoader";
 import Navbar from "../components/Navbar";
-import ReadmoreCard from "../components/ReadmoreCard";
+import ReadMore from "../components/ReadMore";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../utils/axios";
 import convertTimestampToFormat from "../utils/convertTimestampToText";
 const Story = () => {
   const { userProfile } = useContext(AuthContext);
   const userId = userProfile?._id;
   const [story, setStory] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const reactions = ["heart", "smile", "flash", "shock", "sad"];
   useEffect(() => {
     if (id) {
+      setIsLoading(true);
       axios
         .get(`/api/stories/${id}`)
         .then(({ data: { data } }) => {
           setStory(data);
+          setIsLoading(false);
         })
         .catch(() => {});
     }
-  }, []);
+  }, [id]);
   const navigate = useNavigate();
 
   const getReactionIcon = (type) => {
@@ -52,7 +55,7 @@ const Story = () => {
   };
   return (
     <>
-      {story ? (
+      {story && (
         <>
           <Navbar theme={"dark"} color="white"></Navbar>
           <div className="flex w-100">
@@ -87,13 +90,23 @@ const Story = () => {
                       >
                         {story.author.name}
                       </p>
-                      <div className="flex justify-center items-center">
+                      <div className="flex justify-start items-center">
                         <p className="text-xs lg:text-sm font-light">
                           {convertTimestampToFormat(story.publishedAt)}
                           &nbsp;&nbsp;•
                         </p>
                         &nbsp;&nbsp;
-                        <div className="cursor-pointer text-xs lg:text-sm font-light rounded-lg">
+                        <div
+                          onClick={() => {
+                            navigate(`/category/${story.category}`, {
+                              state: {
+                                title: `${story.category} Stories`,
+                                apiUrl: `/api/category/${story.category}`,
+                              },
+                            });
+                          }}
+                          className="cursor-pointer text-xs lg:text-sm font-light rounded-lg"
+                        >
                           {story.category}
                         </div>
                       </div>
@@ -147,30 +160,11 @@ const Story = () => {
               </div>
               <Comments storyId={story._id} userId={userId}></Comments>
             </div>
-            <div className="border-t border-cyan hidden lg:flex flex-col justify-start items-center w-[400px] h-[700px]">
-              <div className="border-b border-cyan relative py-24 px-1 flex w-[100%] h-[150px] flex-col items-center justify-center">
-                <button
-                  type="button"
-                  className="w-[96%]  transition-all duration-75 ease-in inline-flex justify-center items-center font-semibold rounded-lg px-5 py-3 text-md bg-black text-white hover:text-white"
-                  id="tk-dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="true"
-                >
-                  Write
-                </button>
-                <h1 className="absolute left-1.3 bottom-1 font-light self-start ml-2">
-                  Read More From People!
-                </h1>
-              </div>
-              {Array.from({ length: 6 }).map((element, index) => {
-                return <ReadmoreCard key={index} />;
-              })}
-            </div>
+            <ReadMore></ReadMore>
           </div>
         </>
-      ) : (
-        <MoonLoader></MoonLoader>
       )}
+      {isLoading && <MoonLoader />}
     </>
   );
 };

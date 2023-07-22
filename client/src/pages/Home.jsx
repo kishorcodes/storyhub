@@ -1,9 +1,10 @@
 import laptopUser from "../assets/images/writing.png";
+import Button from "../components/Button";
 import Footer from "../components/Footer";
 import LatestStories from "../components/LatestStories";
 import Navbar from "../components/Navbar";
 import Reccomended from "../components/Reccomended";
-import Button from "../components/Button";
+
 const Home = () => {
   const scrollToReccomended = () => {
     document

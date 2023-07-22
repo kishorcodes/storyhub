@@ -2,6 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import Button from "./Button";
 import Logo from "./Logo";
 export default function Submitbar({ setPublishMode }) {
+  
   const handlePublishClick = () => {
     setPublishMode(true);
   };
@@ -14,7 +15,7 @@ export default function Submitbar({ setPublishMode }) {
             <Logo />
             <Button
               text={"Submit"}
-              bgColor={"[#7CB342]"}
+              bgColor={"black"}
               fgColor={"white"}
               hoverColor={"[#388E3C]"}
               onClick={handlePublishClick}

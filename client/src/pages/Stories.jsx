@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import axios from "../axios";
-import MoonLoader from "../components/MoonLoader";
-import StoryCard from "../components/StoryCard";
 import { useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
+import MoonLoader from "../components/MoonLoader";
+import Navbar from "../components/Navbar";
+import StoryCard from "../components/StoryCard";
+import axios from "../utils/axios";
 const Stories = () => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    axios.get(location.state.apiUrl).then(({ data: { data } }) => {
-      
-      setStories(data);
-      setIsLoading(false);
-    });
+    console.log(location.state.apiParams);
+    axios
+      .get(location.state.apiUrl, location.state.apiParams || {})
+      .then(({ data: { data } }) => {
+        setStories(data);
+        setIsLoading(false);
+      });
   }, [location]);
 
   return (
     <>
       <Navbar color={"[#0667AE]"} bordered={false}></Navbar>
-
-      <div className="flex flex-col px-16 py-8">
+      <div className="flex flex-col min-h-[100vh] px-16 py-8">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl">{location?.state?.title}</h1>
           <select
@@ -34,7 +36,7 @@ const Stories = () => {
             <option value="oldest">Oldest first</option>
           </select>
         </div>
-        <div className="mt-8 flex flex-wrap justify-between items-start gap-20">
+        <div className="mt-8 flex flex-wrap  justify-between items-start gap-20">
           {isLoading ? (
             <MoonLoader />
           ) : stories && stories.length > 0 ? (
@@ -44,6 +46,7 @@ const Stories = () => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

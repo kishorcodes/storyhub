@@ -6,20 +6,28 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     unique: true,
-    required: "Email field is required",
+    required: "email field is required",
   },
   name: {
     type: String,
-    required: "Name field is required",
+    required: "name field is required",
   },
   picture: {
     type: String,
-    required: "Name field is required",
+    required: "picture field is required",
   },
   stories: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Story",
+      required: "story field is required",
+    },
+  ],
+  bookmarks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Story",
+      required: "story field is required",
     },
   ],
 });

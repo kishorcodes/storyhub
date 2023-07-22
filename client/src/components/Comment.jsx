@@ -8,7 +8,6 @@ const Comment = ({ comment, isOwnComment }) => {
         className="w-[40px] w-[40px] rounded-full"
         alt="author"
       />
-
       <div className="flex flex-col items-start">
         <p className="text-md font-medium">{authorName}</p>
         <p className="text-sm font-normal">{comment.text}</p>

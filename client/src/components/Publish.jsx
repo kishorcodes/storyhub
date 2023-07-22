@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthContext";
-import close from "../assets/images/close.svg";
-import Button from "./Button";
-import axios from "../axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import close from "../assets/images/close.svg";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../utils/axios";
+import Button from "./Button";
 
 const Publish = ({ setPublishMode, content }) => {
   const navigate = useNavigate();
@@ -113,12 +113,12 @@ const Publish = ({ setPublishMode, content }) => {
         </div>
 
         <div className="flex flex-col gap-5 w-[100%]">
-       
           <p className="text-sm">
             Choose topic so readers know what your story is about
           </p>
           <div>
             <select
+              onChange={(e) => setCategory(e.target.value)}
               id="default"
               class="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg block w-85 p-2.5"
             >
@@ -142,7 +142,7 @@ const Publish = ({ setPublishMode, content }) => {
           <div className="">
             <Button
               text={"Publish"}
-              bgColor={"green-600"}
+              bgColor={"[#7CB342]"}
               fgColor={"white"}
               onClick={() => {
                 toast.promise(createStory(), {

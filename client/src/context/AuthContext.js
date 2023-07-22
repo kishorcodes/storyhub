@@ -1,8 +1,8 @@
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "./axios";
 import React, { createContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import useDidMountEffect from "./hooks/useDidMountEffect";
+import useDidMountEffect from "../hooks/useDidMountEffect";
+import axios from "../utils/axios";
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   //get saved user session from local storage

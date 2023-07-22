@@ -1,7 +1,5 @@
-// 3rd Party Modules
 const express = require("express");
 const cors = require("cors");
-
 require("dotenv").config();
 
 const myRoute = require("./routes/apiRoutes.js");
@@ -15,6 +13,7 @@ app.use(
     origin: "*",
   })
 );
+
 app.use("/api", myRoute);
 
 app.listen(PORT, (error) => {

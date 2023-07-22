@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import MarkdownEditor from "../components/MarkdownEditor";
 import MoonLoader from "../components/MoonLoader";
 import Publish from "../components/Publish";

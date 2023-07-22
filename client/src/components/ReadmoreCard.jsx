@@ -1,21 +1,23 @@
-const ReadmoreCard = () => {
+import { useNavigate } from "react-router-dom";
+
+const ReadmoreCard = ({ story }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="border-b border-cyan px-5 py-4 user flex justify-start items-center gap-4 cursor-pointer">
+    <div
+      onClick={() => navigate(`/stories/${story._id}`)}
+      className="w-[100%] border-b border-cyan px-5 py-4 user flex justify-start items-center gap-4 cursor-pointer"
+    >
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-start gap-3 ">
           <img
-            src="https://avatars.githubusercontent.com/u/76237264?v=4"
+            src={story.author.picture}
             alt=""
             className="rounded-full w-[25px]"
           />
-          <p className="text-sm font-normal">Kishor</p>
+          <p className="text-sm font-normal">{story.author.name}</p>
         </div>
-        <div className="flex gap-4 justify-center items-center">
-          <p className="text-xs lg:text-sm font-light">
-            Pursuing My Dream: How I Turned My Music Passion into a Successful
-            Career
-          </p>
-        </div>
+        <p className="text-xs lg:text-sm font-light">{story.title}</p>
       </div>
     </div>
   );

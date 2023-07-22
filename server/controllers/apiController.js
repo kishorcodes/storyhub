@@ -3,6 +3,199 @@ const User = require("../models/User");
 const Story = require("../models/Story");
 const Comment = require("../models/Comment");
 
+const createStory = async (req, res) => {
+  try {
+    const newStory = new Story(req.body);
+    const savedStory = await newStory.save();
+    const author = await User.findOne({ _id: req.body.author });
+    author.stories.push(savedStory._id);
+    await author.save();
+    res.status(201).json({
+      status: "success",
+      data: savedStory,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+const getAllStories = (req, res) => {
+  Story.find({})
+    .populate("author")
+    .then((stories) => {
+      res.status(200).json({
+        status: "success",
+        data: stories,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getStoryById = async (req, res) => {
+  try {
+    const storyId = req.params.id;
+    const story = await Story.findOne({ _id: storyId })
+      .populate("author")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+          model: "User",
+        },
+      });
+
+    res.status(200).json({
+      status: "success",
+      data: story,
+    });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
+  }
+};
+
+const getLatestStories = (req, res) => {
+  Story.find({})
+    .populate("author")
+    .limit(6)
+    .then((stories) => {
+      res.status(200).json({
+        status: "success",
+        data: stories,
+      });
+    })
+    .catch((err) => {
+      res.status(403).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getStoriesByCategory = (req, res) => {
+  const { category } = req.params;
+  Story.find({ category })
+    .populate("author")
+    .then((stories) => {
+      res.status(200).json({
+        status: "success",
+        data: stories,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getStoriesByUser = (req, res) => {
+  const userId = req.params.id;
+  User.findOne({ _id: userId })
+    .populate({
+      path: "stories",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    })
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user.stories,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getBookmarks = (req, res) => {
+  const { userId } = req.body;
+  User.findOne({ _id: userId })
+    .populate({
+      path: "bookmarks",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    })
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user.bookmarks,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const addBookmark = (req, res) => {
+  const { userId, storyId } = req.body;
+  User.findOne({ _id: userId })
+    .then((user) => {
+      if (user.bookmarks.includes(storyId)) {
+        return res.status(409).json({
+          status: "failure",
+          message: "Bookmark already exists",
+        });
+      }
+      user.bookmarks.push(storyId);
+      user.save();
+      res.status(201).json({
+        status: "success",
+        message: "Bookmark saved successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const authenticateUser = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const name = req.body.name;
+    const picture = req.body.picture;
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          email,
+          name,
+          picture,
+        },
+      },
+      { upsert: true, new: true }
+    );
+
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while adding the comment",
+    });
+  }
+};
+
 const addComment = async (req, res) => {
   try {
     const storyId = req.params.id;
@@ -29,93 +222,16 @@ const addComment = async (req, res) => {
         },
       });
 
-    res.status(200).json({
-      status: "succcess",
+    res.status(201).json({
+      status: "success",
       data: story,
     });
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while adding the comment" });
-  }
-};
-
-const createStory = async (req, res) => {
-  try {
-    const newStory = new Story(req.body);
-    const savedStory = await newStory.save();
-    const author = await User.findOne({ _id: req.body.author });
-    author.stories.push(savedStory._id);
-    await author.save();
-    res.json({
-      status: "success",
-      data: savedStory,
-    });
   } catch (err) {
-    console.log(err);
-    res.status(403).json({
+    res.status(500).json({
       status: "error",
+      message: "An error occurred while adding the comment",
     });
   }
-};
-
-const getAllStories = (req, res) => {
-  Story.find({})
-    .populate("author")
-    .then((stories) => {
-      res.status(200).json({
-        status: "success",
-        data: stories,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-const getLatestStories = (req, res) => {
-  Story.find({})
-    .populate("author")
-    .limit(6)
-    .then((stories) => {
-      res.status(200).json({
-        status: "success",
-        data: stories,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-const getStoriesByCategory = (req, res) => {
-  const { category } = req.body;
-  Story.find({ category })
-    .populate("author")
-    .then((stories) => {
-      res.status(200).json({
-        status: "success",
-        data: stories,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-const getStoriesByUser = (req, res) => {
-  const userId = req.params.id;
-  User.findOne({ _id: userId })
-    .populate({
-      path: "stories",
-      populate: {
-        path: "author",
-        model: "User",
-      },
-    })
-    .then((user) => {
-      console.log(user);
-      res.status(200).json({
-        status: "success",
-        data: user.stories,
-      });
-    })
-    .catch((err) => console.log(err));
 };
 
 const updateReactionCount = async (req, res) => {
@@ -125,7 +241,10 @@ const updateReactionCount = async (req, res) => {
     const story = await Story.findOne({ _id: storyId }).populate("author");
 
     if (!story) {
-      return console.log("Story not found");
+      return res.status(404).json({
+        status: "error",
+        message: "invalid story id",
+      });
     }
 
     switch (reactionType) {
@@ -149,55 +268,13 @@ const updateReactionCount = async (req, res) => {
     }
 
     const updatedStory = await story.save();
-    res.json({
+    res.status(201).json({
       status: "success",
       data: updatedStory,
     });
-  } catch (error) {
-    console.log(error);
-    res.json({ status: "error" });
-  }
-};
-
-const getStoryById = async (req, res) => {
-  try {
-    const storyId = req.params.id;
-    const story = await Story.findOne({ _id: storyId })
-      .populate("author")
-      .populate({
-        path: "comments",
-        populate: {
-          path: "author",
-          model: "User",
-        },
-      });
-
-    res.json({
-      status: "success",
-      data: story,
-    });
   } catch (err) {
-    res.json({ status: "error" });
+    res.status(500).json({ status: "error", message: err.message });
   }
-};
-
-const authenticateUser = async (req, res) => {
-  const email = req.body.email;
-  const name = req.body.name;
-  const picture = req.body.picture;
-  const user = await User.findOneAndUpdate(
-    { email: email },
-    {
-      $set: {
-        email,
-        name,
-        picture,
-      },
-    },
-    { upsert: true, new: true }
-  );
-
-  res.status(201).json(user);
 };
 
 module.exports = {
@@ -210,4 +287,6 @@ module.exports = {
   getStoryById,
   addComment,
   updateReactionCount,
+  getBookmarks,
+  addBookmark,
 };

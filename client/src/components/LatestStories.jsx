@@ -1,6 +1,6 @@
-import axios from "../axios";
 import { useEffect, useState } from "react";
 import arrow from "../assets/images/diagonal_arrow.svg";
+import axios from "../utils/axios";
 import LatestStoryCard from "./LatestStoryCard";
 
 const LatestStories = () => {

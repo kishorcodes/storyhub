@@ -7,7 +7,7 @@ const Button = ({
   additionalClasses,
 }) => {
   const generateClassName = () => {
-    return `transition-all duration-75 ease-in inline-flex justify-center items-center font-medium rounded-lg px-5 py-3 text-sm md:text-md bg-${bgColor} text-${fgColor} hover:bg-${hoverColor} ${additionalClasses}`;
+    return `bg-${bgColor} transition-all duration-75 ease-in font-medium rounded-lg px-5 py-3 text-sm md:text-md  text-${fgColor} hover:bg-${hoverColor} ${additionalClasses}`;
   };
 
   return (
