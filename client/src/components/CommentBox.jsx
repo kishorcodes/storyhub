@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import Button from "./Button";
+import Button from "./common/Button";
 
 const CommentBox = ({ saveComment }) => {
   const [comment, setComment] = useState("");

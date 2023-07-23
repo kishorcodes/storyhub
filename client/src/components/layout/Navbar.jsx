@@ -2,8 +2,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import Logo from "./Logo";
+import { AuthContext } from "../../context/AuthContext";
+import Logo from "../common/Logo";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -38,9 +38,8 @@ const Navbar = () => {
     else if (href === "/bookmarks") {
       navigate(href, {
         state: {
-          title: "Bookmarks",
-          apiUrl: "/api/bookmarks",
-          apiParams: { userId:userId },
+          title: "Your Bookmarks",
+          apiUrl: `/api/bookmarks/${userId}`,
         },
       });
     }
@@ -54,7 +53,7 @@ const Navbar = () => {
           <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
-                <Logo />
+                <Logo color={"black"} />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="hidden sm:ml-6 sm:block">

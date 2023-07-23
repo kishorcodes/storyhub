@@ -1,8 +1,8 @@
 import laptopUser from "../assets/images/writing.png";
-import Button from "../components/Button";
-import Footer from "../components/Footer";
+import Button from "../components/common/Button";
+import Footer from "../components/layout/Footer";
 import LatestStories from "../components/LatestStories";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/layout/Navbar";
 import Reccomended from "../components/Reccomended";
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
   };
   return (
     <>
-      <Navbar color={"[#F6F6FF]"} bordered={false} theme={'dark'}></Navbar>
+      <Navbar color={"[#F6F6FF]"} bordered={false} theme={"dark"}></Navbar>
       <div className="pt-5 md:pt-0 border-b border-[#DFDFE9] h-[550px] flex flex-col md:flex-row justify-between items-center md:pl-10 md:pr-28">
         <div className="px-6 lg:px-10 flex-col flex gap-5 lg:gap-7 h-[100%] items-start justify-center">
           <h1 className="font-montse font-medium text-3xl md:text-5xl xl:text-7xl">

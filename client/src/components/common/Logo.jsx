@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/images/doc.svg";
+import logo from "../../assets/images/logo.svg";
 
-const Logo = () => {
+const Logo = ({ color }) => {
   return (
     <Link to={"/"}>
       <div className="cursor-pointer flex items-center justify-between sm:items-stretch sm:justify-start">
@@ -16,7 +16,11 @@ const Logo = () => {
             src={logo}
             alt="Your Company"
           />
-          <h1 className="font-medium lg:font-semibold ml-1 text-md lg:text-lg">STORYHUB</h1>
+          <h1
+            className={`font-medium lg:font-semibold ml-1 text-${color} text-md lg:text-lg`}
+          >
+            STORYHUB
+          </h1>
         </div>
       </div>
     </Link>

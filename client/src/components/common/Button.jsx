@@ -6,8 +6,11 @@ const Button = ({
   onClick,
   additionalClasses,
 }) => {
+  
   const generateClassName = () => {
-    return `bg-${bgColor} transition-all duration-75 ease-in font-medium rounded-lg px-5 py-3 text-sm md:text-md  text-${fgColor} hover:bg-${hoverColor} ${additionalClasses}`;
+    return `bg-${bgColor} transition-all duration-75 ease-in font-medium rounded-lg px-5 py-3 text-sm md:text-md text-${fgColor} hover:bg-${hoverColor} ${
+      additionalClasses ? additionalClasses : ""
+    }`;
   };
 
   return (

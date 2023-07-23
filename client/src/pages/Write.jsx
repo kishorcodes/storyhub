@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import MarkdownEditor from "../components/MarkdownEditor";
-import MoonLoader from "../components/MoonLoader";
+import MoonLoader from "../components/common/MoonLoader";
 import Publish from "../components/Publish";
 import Submitbar from "../components/Submitbar";
 const Write = () => {
+  
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [publishMode, setPublishMode] = useState(false);
   const editorRef = useRef(null);

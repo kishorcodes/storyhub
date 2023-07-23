@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import close from "../assets/images/close.svg";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../utils/axios";
-import Button from "./Button";
+import Button from "./common/Button";
 
 const Publish = ({ setPublishMode, content }) => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const Publish = ({ setPublishMode, content }) => {
   const [subtitle, setSubtitle] = useState("");
   const [category, setCategory] = useState("Personal");
   const [thumbnail, setThumbnail] = useState(null);
+
   const categories = [
     "Personal",
     "Finance",
@@ -65,21 +66,20 @@ const Publish = ({ setPublishMode, content }) => {
         "https://api.unsplash.com/photos/random/?client_id=EcA3PWnVrPvszvIvY6OPSmQrzJWNXHo_RFaAaZI6_Ds&query=nature"
       )
       .then(({ data: { urls } }) => {
-        setThumbnail(urls.thumb);
+        setThumbnail(urls.full);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       <img
         src={close}
         className="h-[20px] w-[20px] lg:h-[25px] lg:w-[25px] absolute top-6 right-6 cursor-pointer"
         alt="close"
-        onClick={() => {
-          setPublishMode(false);
-        }}
+        onClick={() => setPublishMode(false)}
       />
 
       <div className="px-5 py-5 lg:p-28 flex flex-col md:flex-row items-center justify-center gap-10 min-h-[80vh] w-[100%]">
@@ -90,17 +90,13 @@ const Publish = ({ setPublishMode, content }) => {
             className="p-5 rounded-md bg-[#F1F5F9] min-h-[250px] h-fit w-[100%]"
           ></div>
           <input
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
             type="text"
             class="placeholder:bold w-full text-lg border-b-2 border-gray-400 outline-none focus:border-blue-400"
             placeholder="Write a preview title"
           />
           <input
-            onChange={(e) => {
-              setSubtitle(e.target.value);
-            }}
+            onChange={(e) => setSubtitle(e.target.value)}
             type="text"
             class="w-full text-sm border-b-2 border-gray-400 outline-none focus:border-blue-400"
             placeholder="Write a preview subtitle..."
@@ -148,7 +144,6 @@ const Publish = ({ setPublishMode, content }) => {
                 toast.promise(createStory(), {
                   loading: "Publishing...",
                   success: <b>Story published!</b>,
-
                   error: <b>Could not publish story.</b>,
                 });
               }}

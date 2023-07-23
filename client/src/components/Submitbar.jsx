@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
-import Button from "./Button";
-import Logo from "./Logo";
+import Button from "./common/Button";
+import Logo from "./common/Logo";
 export default function Submitbar({ setPublishMode }) {
   
   const handlePublishClick = () => {

@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import convertTimestampToText from "../utils/convertTimestampToText";
+import convertTimestampToText from "../../utils/convertTimestampToText";
+
 const StoryCard = ({ story }) => {
   const navigate = useNavigate();
+
+  const handleStoryClick = () => {
+    navigate(`/stories/${story._id}`);
+  };
+
   return (
     <div
-      onClick={() => navigate(`/stories/${story._id}`)}
+      onClick={handleStoryClick}
       className="flex flex-col bg-white border border-[#DFDFE9] rounded-lg min-h-[380px] w-[380px] cursor-pointer"
       to={`/stories/${story._id}`}
     >

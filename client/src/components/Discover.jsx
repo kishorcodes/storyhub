@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Discover = () => {
   const navigate = useNavigate();
-  
-  const [categories, setCategories] = useState([
+
+  const categories = [
     "Personal",
     "Finance",
     "Health & Fitness",
@@ -14,7 +13,7 @@ const Discover = () => {
     "Self improvment",
     "Environment",
     "Others",
-  ]);
+  ];
 
   const handleCategoryClick = (category) => {
     navigate(`/category/${category}`, {
@@ -24,7 +23,7 @@ const Discover = () => {
       },
     });
   };
-  
+
   return (
     <div className="sticky top-0 w-full lg:w-2/5 h-fit py-12 px-8 flex flex-col justify-center gap-3 items-start border-b border-t border-[#e5e7eb] ">
       <p className="text-sm font-medium">

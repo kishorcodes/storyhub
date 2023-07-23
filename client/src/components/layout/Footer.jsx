@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.svg";
-
+import Logo from "../common/Logo";
 const Footer = () => {
   const navigation = [
     { name: "Write Your Story", href: "/write", current: true },
@@ -16,8 +15,7 @@ const Footer = () => {
           to={"/"}
           className="flex gap-1 items-center justify-center lg:justify-start"
         >
-          <img className="block h-8 w-auto" src={logo} alt="Your Company" />
-          <h1 className="font-bold text-white ml-1">STORYHUB</h1>
+          <Logo color="white" />
         </Link>
 
         <ul className="flex text-white gap-2.5 md:gap-6 no-underline">

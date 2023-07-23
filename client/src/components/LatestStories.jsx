@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import arrow from "../assets/images/diagonal_arrow.svg";
 import axios from "../utils/axios";
-import LatestStoryCard from "./LatestStoryCard";
+import LatestStoryCard from "./cards/LatestStoryCard";
 
 const LatestStories = () => {
   const [latestStories, setLatestStories] = useState([]);
@@ -30,15 +30,7 @@ const LatestStories = () => {
 
       <div className="flex flex-wrap justify-between items-start gap-y-4">
         {latestStories.map((story) => (
-          <LatestStoryCard
-            key={story._id}
-            storyId={story._id}
-            position={`0${latestStories.indexOf(story) + 1}`}
-            author={story.author}
-            title={story.title}
-            publishDate={story.publishedAt}
-            category={story.category}
-          />
+          <LatestStoryCard key={story._id} story={story} />
         ))}
       </div>
     </div>

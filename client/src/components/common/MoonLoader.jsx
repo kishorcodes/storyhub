@@ -1,6 +1,6 @@
 import Loader from "react-spinners/MoonLoader";
 
-const ClockLoader = ({ color, size }) => {
+const ClockLoader = () => {
   return (
     <Loader
       color="#36d7b7"

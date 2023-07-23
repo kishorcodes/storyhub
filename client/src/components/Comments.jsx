@@ -24,16 +24,11 @@ const Comments = ({ userId, storyId }) => {
           story: storyId,
           createdAt: new Date(),
         })
-        .then(
-          ({
-            data: {
-              data: { comments },
-            },
-          }) => {
-            setComments([...comments]);
-            resolve();
-          }
-        )
+        .then(({ data }) => {
+          const comments = data.data.comments;
+          setComments([...comments]);
+          resolve();
+        })
         .catch(() => reject());
     });
   };

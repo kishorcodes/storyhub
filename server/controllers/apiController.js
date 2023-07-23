@@ -122,7 +122,7 @@ const getStoriesByUser = (req, res) => {
 };
 
 const getBookmarks = (req, res) => {
-  const { userId } = req.body;
+  const userId = req.params.id;
   User.findOne({ _id: userId })
     .populate({
       path: "bookmarks",

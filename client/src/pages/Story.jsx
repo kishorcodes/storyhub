@@ -1,28 +1,56 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import bookmark from "../assets/images/bookmark2.svg";
 import flash from "../assets/images/flash.svg";
 import heart from "../assets/images/heart.svg";
-import link from "../assets/images/link.svg";
 import sad from "../assets/images/sad.svg";
 import shock from "../assets/images/shock.svg";
 import smile from "../assets/images/smile.svg";
-import twitter from "../assets/images/twitter.svg";
-import whatsapp from "../assets/images/whatsapp.svg";
 import Comments from "../components/Comments";
-import MoonLoader from "../components/MoonLoader";
-import Navbar from "../components/Navbar";
 import ReadMore from "../components/ReadMore";
+import SocialShare from "../components/SocialShare";
+import MoonLoader from "../components/common/MoonLoader";
+import Navbar from "../components/layout/Navbar";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../utils/axios";
 import convertTimestampToFormat from "../utils/convertTimestampToText";
 const Story = () => {
-  const { userProfile } = useContext(AuthContext);
-  const userId = userProfile?._id;
   const [story, setStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { userProfile } = useContext(AuthContext);
+  const userId = userProfile?._id;
   const { id } = useParams();
   const reactions = ["heart", "smile", "flash", "shock", "sad"];
+
+  const handleReactionClick = (type) => {
+    axios
+      .post(`/api/stories/${id}/reaction`, {
+        reactionType: type,
+      })
+      .then(({ data: { data } }) => {
+        setStory(data);
+      })
+      .catch(() => {});
+  };
+
+  const handleCategoryClick = () => {
+    navigate(`/category/${story.category}`, {
+      state: {
+        title: `${story.category} Stories`,
+        apiUrl: `/api/category/${story.category}`,
+      },
+    });
+  };
+
+  const handleAuthorClick = () => {
+    navigate(`/user/${story.author._id}`, {
+      state: {
+        title: `${story.author.name}'s stories`,
+        apiUrl: `/api/user/${story.author._id}`,
+      },
+    });
+  };
+
   useEffect(() => {
     if (id) {
       setIsLoading(true);
@@ -35,7 +63,6 @@ const Story = () => {
         .catch(() => {});
     }
   }, [id]);
-  const navigate = useNavigate();
 
   const getReactionIcon = (type) => {
     switch (type) {
@@ -53,11 +80,12 @@ const Story = () => {
         return;
     }
   };
+
   return (
     <>
       {story && (
         <>
-          <Navbar theme={"dark"} color="white"></Navbar>
+          <Navbar></Navbar>
           <div className="flex w-100">
             <div className="flex flex-col flex-1 border border-cyan ">
               <div className="h-[70px] flex items-center justify-center">
@@ -78,14 +106,7 @@ const Story = () => {
                     />
                     <div className="flex flex-col">
                       <p
-                        onClick={() => {
-                          navigate(`/user/${story.author._id}`, {
-                            state: {
-                              title: `${story.author.name}'s stories`,
-                              apiUrl: `/api/user/${story.author._id}`,
-                            },
-                          });
-                        }}
+                        onClick={handleAuthorClick}
                         className="cursor-pointer text-md font-medium"
                       >
                         {story.author.name}
@@ -97,14 +118,7 @@ const Story = () => {
                         </p>
                         &nbsp;&nbsp;
                         <div
-                          onClick={() => {
-                            navigate(`/category/${story.category}`, {
-                              state: {
-                                title: `${story.category} Stories`,
-                                apiUrl: `/api/category/${story.category}`,
-                              },
-                            });
-                          }}
+                          onClick={handleCategoryClick}
                           className="cursor-pointer text-xs lg:text-sm font-light rounded-lg"
                         >
                           {story.category}
@@ -112,39 +126,23 @@ const Story = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex items-center justify-center gap-2 lg:gap-5">
-                    <img className="h-[18px] w-[18px]" src={whatsapp} alt="" />
-                    <img className="h-[18px] w-[18px]" src={twitter} alt="" />
-                    <img className="h-[18px] w-[18px]" src={bookmark} alt="" />
-                    <img className="h-[18px] w-[18px]" src={link} alt="" />
-                  </div>
+                  <SocialShare />
                 </div>
-
                 <div className="border-b border-cyan content flex flex-col gap-5 px-4 lg:px-12">
                   <h1 className="text-2xl lg:text-4xl">{story.title}</h1>
                   <p className="text-md lg:text-2xl font-normal text-[gray]">
                     {story.subtitle}
                   </p>
                   <div className="gap-8 pb-5 flex flex-col">
-                    <p
+                    <div
                       dangerouslySetInnerHTML={{ __html: story.content }}
-                      className="text-md font-normal lg:text-md leading-8"
-                    ></p>
+                      className="leading-7 text-md font-normal lg:text-md"
+                    ></div>
                     <div className="p-3 rounded-lg border border-cyan self-center flex gap-3 items-center justify-center">
                       {reactions.map((type) => (
                         <div className="flex items-center justify-center">
                           <img
-                            onClick={() => {
-                              axios
-                                .post(`/api/stories/${id}/reaction`, {
-                                  reactionType: type,
-                                })
-                                .then(({ data: { data } }) => {
-                                  setStory(data);
-                                })
-                                .catch(() => {});
-                            }}
+                            onClick={() => handleReactionClick(type)}
                             className="scale-100 hover:scale-105 transition-all duration-75"
                             height={50}
                             width={50}
