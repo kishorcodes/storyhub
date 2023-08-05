@@ -1,4 +1,4 @@
-import laptopUser from "../assets/images/writing.png";
+import laptopUser from "../assets/images/cc.svg";
 import Button from "../components/common/Button";
 import Footer from "../components/layout/Footer";
 import LatestStories from "../components/LatestStories";
@@ -35,7 +35,7 @@ const Home = () => {
         </div>
 
         <img
-          className="lg:block h-auto max-w-[300px] md:max-w-sm lg:max-w-lg"
+          className="lg:block h-auto max-w-[300px] md:max-w-sm lg:max-w-md"
           src={laptopUser}
           alt="kid-writing"
         />

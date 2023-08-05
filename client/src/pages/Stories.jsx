@@ -6,19 +6,22 @@ import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import axios from "../utils/axios";
 const Stories = () => {
-
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortCriteria, setSortCriteria] = useState("latest");
+
   const location = useLocation();
 
   useEffect(() => {
     axios.get(location.state.apiUrl).then(({ data: { data } }) => {
-      console.log(data);
       setStories(data);
       setIsLoading(false);
     });
   }, [location]);
 
+  useEffect(() => {
+    console.log(sortCriteria);
+  }, [sortCriteria]);
   return (
     <>
       <Navbar color={"[#0667AE]"} bordered={false}></Navbar>
@@ -28,11 +31,11 @@ const Stories = () => {
           {stories && stories.length > 0 && (
             <select
               id="default"
-              class="outline-none bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg block w-25 p-2.5"
+              defaultValue={"Latest first"}
+              onChange={(e) => setSortCriteria(e.target.value)}
+              className="outline-none bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg block w-25 p-2.5"
             >
-              <option selected value="latest">
-                Latest first
-              </option>
+              <option value="latest">Latest first</option>
               <option value="oldest">Oldest first</option>
             </select>
           )}
@@ -43,12 +46,15 @@ const Stories = () => {
           <div
             className={`mt-8 flex flex-wrap justify-between items-start gap-20`}
           >
-            {stories.map((story, index) => (
-              <StoryCard story={story} />
+            {(sortCriteria === "latest"
+              ? stories.slice().reverse()
+              : stories
+            ).map((story, index) => (
+              <StoryCard key={story._id} story={story} />
             ))}
           </div>
         ) : (
-          <p className="text-xl">No stories found</p>
+          <p className="text-xl mt-5">No stories found</p>
         )}
       </div>
       <Footer />

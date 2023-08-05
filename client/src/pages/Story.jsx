@@ -13,24 +13,29 @@ import Navbar from "../components/layout/Navbar";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../utils/axios";
 import convertTimestampToFormat from "../utils/convertTimestampToText";
+import { toast } from "react-hot-toast";
 const Story = () => {
   const [story, setStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { userProfile } = useContext(AuthContext);
+  const { userProfile, isLoggedIn } = useContext(AuthContext);
   const userId = userProfile?._id;
   const { id } = useParams();
   const reactions = ["heart", "smile", "flash", "shock", "sad"];
 
   const handleReactionClick = (type) => {
-    axios
-      .post(`/api/stories/${id}/reaction`, {
-        reactionType: type,
-      })
-      .then(({ data: { data } }) => {
-        setStory(data);
-      })
-      .catch(() => {});
+    if (isLoggedIn) {
+      axios
+        .post(`/api/stories/${id}/reaction`, {
+          reactionType: type,
+        })
+        .then(({ data: { data } }) => {
+          setStory(data);
+        })
+        .catch(() => {});
+    } else {
+      toast.error("You need to login to react");
+    }
   };
 
   const handleCategoryClick = () => {
@@ -139,8 +144,11 @@ const Story = () => {
                       className="leading-7 text-md font-normal lg:text-md"
                     ></div>
                     <div className="p-3 rounded-lg border border-cyan self-center flex gap-3 items-center justify-center">
-                      {reactions.map((type) => (
-                        <div className="flex items-center justify-center">
+                      {reactions.map((type, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center"
+                        >
                           <img
                             onClick={() => handleReactionClick(type)}
                             className="scale-100 hover:scale-105 transition-all duration-75"

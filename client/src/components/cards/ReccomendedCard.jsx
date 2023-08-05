@@ -17,8 +17,9 @@ const ReccomendedCard = ({ story }) => {
   const saveBookmark = (storyId) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("/api/bookmarks", { storyId: story.storyId, userId })
+        .post("/api/bookmarks", { storyId, userId })
         .then((res) => {
+          console.log(res);
           resolve();
         })
         .catch(() => reject());
@@ -60,13 +61,14 @@ const ReccomendedCard = ({ story }) => {
             height={30}
             width={30}
             alt="bookmark"
-            onClick={() =>
-              toast.promise(saveBookmark(story.storyId), {
+            onClick={(e) => {
+              e.preventDefault();
+              toast.promise(saveBookmark(story._id), {
                 loading: "Saving bookmark...",
                 success: <b>Bookmark saved!</b>,
                 error: <b>Bookmark already exists.</b>,
-              })
-            }
+              });
+            }}
           />
         </div>
       </div>

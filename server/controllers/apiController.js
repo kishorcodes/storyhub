@@ -123,15 +123,14 @@ const getStoriesByUser = (req, res) => {
 
 const getBookmarks = (req, res) => {
   const userId = req.params.id;
+
   User.findOne({ _id: userId })
     .populate({
       path: "bookmarks",
-      populate: {
-        path: "author",
-        model: "User",
-      },
+      model: "Story",
     })
     .then((user) => {
+      console.log(user);
       res.status(200).json({
         status: "success",
         data: user.bookmarks,
@@ -156,6 +155,8 @@ const addBookmark = (req, res) => {
         });
       }
       user.bookmarks.push(storyId);
+      console.log(user);
+
       user.save();
       res.status(201).json({
         status: "success",

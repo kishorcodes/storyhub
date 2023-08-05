@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Story",
-      required: "story field is required",
+      required: "bookmarks field is required",
     },
   ],
 });

@@ -4,7 +4,7 @@ import { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../common/Logo";
-
+import { toast } from "react-hot-toast";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -16,6 +16,7 @@ const Navbar = () => {
     { name: "Stories", href: "/stories" },
     { name: "Contact Us", href: "/contact" },
   ];
+
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
   const userId = userProfile?._id;
   const navigate = useNavigate();
@@ -36,12 +37,22 @@ const Navbar = () => {
         state: { title: "Discover Stories", apiUrl: "/api/stories/all" },
       });
     else if (href === "/bookmarks") {
-      navigate(href, {
-        state: {
-          title: "Your Bookmarks",
-          apiUrl: `/api/bookmarks/${userId}`,
-        },
-      });
+      if (!isLoggedIn) {
+        toast.error("You must be logged in");
+      } else {
+        navigate(href, {
+          state: {
+            title: "Your Bookmarks",
+            apiUrl: `/api/bookmarks/${userId}`,
+          },
+        });
+      }
+    } else if (href === "/write") {
+      if (!isLoggedIn) {
+        toast.error("You must be logged in");
+      } else {
+        navigate(href);
+      }
     }
   };
 
@@ -49,7 +60,6 @@ const Navbar = () => {
     <Disclosure as="nav">
       {({ open }) => (
         <>
-          <div></div>
           <div className="mx-auto max-w-8xl px-3 py-1.5 sm:px-6 lg:px-20">
             <div className="relative flex h-16 items-center justify-between">
               <div className="cursor-pointer flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
@@ -62,7 +72,10 @@ const Navbar = () => {
                       <a
                         key={item.name}
                         href={item.href}
-                        onClick={() => handleNavigationClick(item.href)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavigationClick(item.href);
+                        }}
                         className={
                           "hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-normal"
                         }
