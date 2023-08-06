@@ -4,11 +4,11 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./components/common/ScrollToTop";
 import { AuthProvider } from "./context/AuthContext";
+import About from "./pages/About";
 import Home from "./pages/Home";
 import Stories from "./pages/Stories";
 import Story from "./pages/Story";
 import Write from "./pages/Write";
-import About from "./pages/About";
 const App = () => {
   const clientId = process.env.REACT_APP_CLIENT_ID;
   return (
@@ -26,7 +26,6 @@ const App = () => {
               <Route path="/category/:category" element={<Stories />}></Route>
               <Route path="/bookmarks" element={<Stories />}></Route>
               <Route path="/about" element={<About />}></Route>
-           
             </Routes>
           </ScrollToTop>
         </Router>

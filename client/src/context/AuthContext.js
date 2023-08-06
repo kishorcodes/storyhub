@@ -17,30 +17,29 @@ export const AuthProvider = ({ children }) => {
 
   //get user profile and set to localstorage
   const getUserInfo = () => {
-    const userInfoAPIUrl = process.env.REACT_APP_USERINFO_API_URL;
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`${userInfoAPIUrl}${user.access_token}`, {
+    const accessToken = user.access_token;
+    const userInfoAPIUrl = `${process.env.REACT_APP_USERINFO_API_URL}${accessToken}`;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userInfoResponse = await axios.get(userInfoAPIUrl, {
           headers: {
-            Authorization: `Bearer ${user.access_token}`,
-            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
-        })
-        .then(({ data }) => {
-          axios
-            .post("/api/auth/google", data)
-            .then(({ data }) => {
-              resolve();
-              console.log(data);
-              setUserProfile(data);
-              localStorage.setItem("userProfile", JSON.stringify(data));
-              setIsLoggedIn(true);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch(() => reject());
+        });
+
+        const userProfile = userInfoResponse.data;
+
+        const loginResponse = await axios.post("/api/auth/google", userProfile);
+        const data = loginResponse.data;
+
+        // Set user profile, update local storage, and set logged in status
+        setUserProfile(data);
+        localStorage.setItem("userProfile", JSON.stringify(data));
+        setIsLoggedIn(true);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 

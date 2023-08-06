@@ -28,7 +28,7 @@ const Publish = ({ setPublishMode, content }) => {
   ];
 
   const createStory = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const newStory = {
         title,
         subtitle,
@@ -47,30 +47,30 @@ const Publish = ({ setPublishMode, content }) => {
         comments: [],
       };
 
-      axios
-        .post("/api/create", newStory)
-        .then(({ data: { data } }) => {
-          const storyId = data._id;
-          navigate(`/stories/${storyId}`);
-          resolve();
-        })
-        .catch((err) => {
-          reject();
-        });
+      try {
+        const response = await axios.post("/api/create", newStory);
+        const storyId = response.data.data._id;
+        navigate(`/stories/${storyId}`);
+        resolve();
+      } catch (err) {
+        reject();
+      }
     });
   };
 
   useEffect(() => {
-    axios
-      .get(
-        "https://api.unsplash.com/photos/random/?client_id=EcA3PWnVrPvszvIvY6OPSmQrzJWNXHo_RFaAaZI6_Ds&query=nature"
-      )
-      .then(({ data: { urls } }) => {
-        setThumbnail(urls.full);
-      })
-      .catch((err) => {
+    const fetchThumbnail = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.unsplash.com/photos/random/?client_id=EcA3PWnVrPvszvIvY6OPSmQrzJWNXHo_RFaAaZI6_Ds&query=nature"
+        );
+
+        setThumbnail(response.data.urls.full);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+    fetchThumbnail();
   }, []);
 
   return (
@@ -92,13 +92,13 @@ const Publish = ({ setPublishMode, content }) => {
           <input
             onChange={(e) => setTitle(e.target.value)}
             type="text"
-            class="placeholder:bold w-full text-lg border-b-2 border-gray-400 outline-none focus:border-blue-400"
+            class="p-1 bg-transparent text-lg border-b-2 border-gray-400 outline-none"
             placeholder="Write a preview title"
           />
           <input
             onChange={(e) => setSubtitle(e.target.value)}
             type="text"
-            class="w-full text-sm border-b-2 border-gray-400 outline-none focus:border-blue-400"
+            class="p-1 bg-transparent text-sm border-b-2 border-gray-400 outline-none"
             placeholder="Write a preview subtitle..."
           />
           <p className="text-sm text-[#828282]">
@@ -138,13 +138,11 @@ const Publish = ({ setPublishMode, content }) => {
           <div className="">
             <Button
               text={"Publish"}
-              bgColor={"[#7CB342]"}
-              fgColor={"white"}
               onClick={() => {
                 toast.promise(createStory(), {
                   loading: "Publishing...",
                   success: <b>Story published!</b>,
-                  error: <b>Could not publish story.</b>,
+                  error: <b>All fields required!</b>,
                 });
               }}
             />

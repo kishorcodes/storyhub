@@ -1,15 +1,15 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import useHandleNavigationClick from "../../hooks/useHandleNavigationClick";
 import Logo from "../common/Logo";
-import { toast } from "react-hot-toast";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = () => {
+  const handleNavigationClick = useHandleNavigationClick();
   const navigation = [
     { name: "Write Your Story", href: "/write" },
     { name: "Bookmarks", href: "/bookmarks" },
@@ -18,8 +18,6 @@ const Navbar = () => {
   ];
 
   const { isLoggedIn, userProfile, login, logout } = useContext(AuthContext);
-  const userId = userProfile?._id;
-  const navigate = useNavigate();
 
   const handleLoginClick = (e) => {
     e.preventDefault();
@@ -29,31 +27,6 @@ const Navbar = () => {
   const handleLogoutClick = (e) => {
     e.preventDefault();
     logout();
-  };
-
-  const handleNavigationClick = (href) => {
-    if (href === "/stories")
-      navigate(href, {
-        state: { title: "Discover Stories", apiUrl: "/api/stories/all" },
-      });
-    else if (href === "/bookmarks") {
-      if (!isLoggedIn) {
-        toast.error("You must be logged in");
-      } else {
-        navigate(href, {
-          state: {
-            title: "Your Bookmarks",
-            apiUrl: `/api/bookmarks/${userId}`,
-          },
-        });
-      }
-    } else if (href === "/write") {
-      if (!isLoggedIn) {
-        toast.error("You must be logged in");
-      } else {
-        navigate(href);
-      }
-    }
   };
 
   return (

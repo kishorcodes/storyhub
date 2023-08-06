@@ -5,25 +5,30 @@ import bookmark from "../../assets/images/bookmark.svg";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "../../utils/axios";
 import convertTimestampToText from "../../utils/convertTimestampToText";
+
 const ReccomendedCard = ({ story }) => {
+  const navigate = useNavigate();
+  const { userProfile, isLoggedIn } = useContext(AuthContext);
+  const userId = userProfile?._id;
+  const storyId = story._id;
+
   const handleStoryClick = () => {
-    navigate(`/stories/${story._id}`);
+    navigate(`/stories/${storyId}`);
   };
 
-  const navigate = useNavigate();
-  const { userProfile } = useContext(AuthContext);
-  const userId = userProfile?._id;
+  const saveBookmark = async () => {
+    try {
+      await axios.post("/api/bookmarks", { storyId, userId });
+      toast.success(<b>Bookmark saved!</b>);
+    } catch (error) {
+      toast.error(<b>Bookmark already exists.</b>);
+    }
+  };
 
-  const saveBookmark = (storyId) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post("/api/bookmarks", { storyId, userId })
-        .then((res) => {
-          console.log(res);
-          resolve();
-        })
-        .catch(() => reject());
-    });
+  const handleBookmarkClick = (e) => {
+    e.stopPropagation();
+    if (!isLoggedIn) return toast.error("You must be logged in");
+    saveBookmark();
   };
 
   return (
@@ -61,14 +66,7 @@ const ReccomendedCard = ({ story }) => {
             height={30}
             width={30}
             alt="bookmark"
-            onClick={(e) => {
-              e.preventDefault();
-              toast.promise(saveBookmark(story._id), {
-                loading: "Saving bookmark...",
-                success: <b>Bookmark saved!</b>,
-                error: <b>Bookmark already exists.</b>,
-              });
-            }}
+            onClick={handleBookmarkClick}
           />
         </div>
       </div>

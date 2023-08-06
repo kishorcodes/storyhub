@@ -130,7 +130,6 @@ const getBookmarks = (req, res) => {
       model: "Story",
     })
     .then((user) => {
-      console.log(user);
       res.status(200).json({
         status: "success",
         data: user.bookmarks,
@@ -155,7 +154,6 @@ const addBookmark = (req, res) => {
         });
       }
       user.bookmarks.push(storyId);
-      console.log(user);
 
       user.save();
       res.status(201).json({
@@ -198,6 +196,43 @@ const authenticateUser = async (req, res) => {
 };
 
 const addComment = async (req, res) => {
+  try {
+    const storyId = req.params.id;
+    const { text, author, createdAt } = req.body;
+
+    const comment = await Comment.create({
+      text,
+      author,
+      story: storyId,
+      createdAt,
+    });
+
+    const story = await Story.findByIdAndUpdate(
+      storyId,
+      { $push: { comments: comment } },
+      { new: true }
+    )
+      .populate("author")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+          model: "User",
+        },
+      });
+
+    res.status(201).json({
+      status: "success",
+      data: story,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while adding the comment",
+    });
+  }
+};
+const deleteComment = async (req, res) => {
   try {
     const storyId = req.params.id;
     const { text, author, createdAt } = req.body;
@@ -287,6 +322,7 @@ module.exports = {
   createStory,
   getStoryById,
   addComment,
+  deleteComment,
   updateReactionCount,
   getBookmarks,
   addBookmark,

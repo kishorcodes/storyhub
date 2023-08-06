@@ -7,12 +7,16 @@ const LatestStories = () => {
   const [latestStories, setLatestStories] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("/api/stories/latest")
-      .then(({ data: { data } }) => {
-        setLatestStories(data);
-      })
-      .catch(() => {});
+    const fetchLatestStories = async () => {
+      try {
+        const response = await axios.get("/api/stories/latest");
+        setLatestStories(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchLatestStories();
   }, []);
 
   return (

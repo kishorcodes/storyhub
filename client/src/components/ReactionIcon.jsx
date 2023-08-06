@@ -1,5 +1,3 @@
-// components/ReactionIcon.js
-import React from "react";
 
 const ReactionIcon = ({ type, onClick, count }) => {
   return (

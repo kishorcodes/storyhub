@@ -1,11 +1,4 @@
-const Button = ({
-  text,
-  bgColor,
-  fgColor,
-  hoverColor,
-  onClick,
-  additionalClasses,
-}) => {
+const Button = ({ text, onClick, additionalClasses }) => {
   const generateClassName = () => {
     return `bg-gray-700 transition-all duration-75 ease-in font-medium rounded-lg px-5 py-3 text-sm md:text-md text-white hover:bg-gray-800 ${
       additionalClasses ? additionalClasses : ""

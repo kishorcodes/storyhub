@@ -4,7 +4,6 @@ const ReadmoreCard = ({ story }) => {
   const navigate = useNavigate();
 
   const handleStoryClick = () => {
-    console.log("hi");
     navigate(`/stories/${story._id}`);
   };
 

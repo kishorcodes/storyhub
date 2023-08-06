@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import flash from "../assets/images/flash.svg";
 import heart from "../assets/images/heart.svg";
@@ -13,7 +14,7 @@ import Navbar from "../components/layout/Navbar";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../utils/axios";
 import convertTimestampToFormat from "../utils/convertTimestampToText";
-import { toast } from "react-hot-toast";
+
 const Story = () => {
   const [story, setStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,16 +24,17 @@ const Story = () => {
   const { id } = useParams();
   const reactions = ["heart", "smile", "flash", "shock", "sad"];
 
-  const handleReactionClick = (type) => {
+  const handleReactionClick = async (type) => {
     if (isLoggedIn) {
-      axios
-        .post(`/api/stories/${id}/reaction`, {
+      try {
+        const response = await axios.post(`/api/stories/${id}/reaction`, {
           reactionType: type,
-        })
-        .then(({ data: { data } }) => {
-          setStory(data);
-        })
-        .catch(() => {});
+        });
+        const { data } = response.data;
+        setStory(data);
+      } catch (error) {
+        console.error("Error reacting to story:", error);
+      }
     } else {
       toast.error("You need to login to react");
     }
@@ -57,16 +59,22 @@ const Story = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      setIsLoading(true);
-      axios
-        .get(`/api/stories/${id}`)
-        .then(({ data: { data } }) => {
+    const fetchStory = async () => {
+      if (id) {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(`/api/stories/${id}`);
+          const { data } = response.data;
           setStory(data);
           setIsLoading(false);
-        })
-        .catch(() => {});
-    }
+        } catch (error) {
+          console.error("Error fetching story:", error);
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchStory();
   }, [id]);
 
   const getReactionIcon = (type) => {
@@ -131,7 +139,7 @@ const Story = () => {
                       </div>
                     </div>
                   </div>
-                  <SocialShare />
+                  <SocialShare storyId={story._id} />
                 </div>
                 <div className="border-b border-cyan content flex flex-col gap-5 px-4 lg:px-12">
                   <h1 className="text-2xl lg:text-4xl">{story.title}</h1>
@@ -164,7 +172,7 @@ const Story = () => {
                   </div>
                 </div>
               </div>
-              <Comments storyId={story._id} userId={userId}></Comments>
+              <Comments storyId={id} userId={userId}></Comments>
             </div>
             <ReadMore></ReadMore>
           </div>

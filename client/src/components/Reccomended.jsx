@@ -8,9 +8,16 @@ const Reccomended = () => {
   const [reccomended, setReccomended] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/stories/all").then(({ data: { data } }) => {
-      setReccomended(data);
-    });
+    const fetchAllStories = async () => {
+      try {
+        const response = await axios.get("/api/stories/latest");
+        setReccomended(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAllStories();
   }, []);
 
   return (
@@ -30,7 +37,7 @@ const Reccomended = () => {
             return <ReccomendedCard key={index} story={story} />;
           })}
 
-          <p className="self-center font-medium text-[#6D6D6D] flex gap-2 items-center justify-center">
+          <p className="self-center font-medium text-[#6D6D6D] flex gap-2 items-center justify-center mt-4">
             You are all caught up.
             <img height={16} width={16} src={tick} alt="tick" />
           </p>

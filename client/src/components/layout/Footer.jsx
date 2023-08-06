@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import useHandleNavigationClick from "../../hooks/useHandleNavigationClick";
 import Logo from "../common/Logo";
 const Footer = () => {
+  const handleNavigationClick = useHandleNavigationClick();
   const navigation = [
     { name: "Write Your Story", href: "/write", current: true },
-    { name: "About Us", href: "/about", current: false },
+    { name: "Bookmarks", href: "/bookmarks", current: false },
     { name: "Stories", href: "/stories", current: false },
     { name: "Contact Us", href: "#", current: false },
   ];
@@ -21,7 +23,14 @@ const Footer = () => {
         <ul className="flex text-white gap-2.5 md:gap-6 no-underline">
           {navigation.map((link, index) => (
             <li key={index}>
-              <Link to={link.href} className={"text-sm font-normal"}>
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigationClick(link.href);
+                }}
+                to={link.href}
+                className={"text-sm font-normal"}
+              >
                 {link.name}
               </Link>
             </li>

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import convertTimestampToFormat from "../../utils/convertTimestampToText";
+
 const LatestStoryCard = ({ story }) => {
   const formattedPublishDate = convertTimestampToFormat(story.publishedAt);
   const navigate = useNavigate();

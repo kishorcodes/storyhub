@@ -5,9 +5,16 @@ const ReadMore = () => {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/stories/all").then(({ data: { data } }) => {
-      setStories(data.slice(0, 6));
-    });
+    const fetchAllStories = async () => {
+      try {
+        const response = await axios.get("/api/stories/latest");
+        setStories(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAllStories();
   }, []);
   return (
     <>
