@@ -7,10 +7,10 @@ import sad from "../assets/images/sad.svg";
 import shock from "../assets/images/shock.svg";
 import smile from "../assets/images/smile.svg";
 import Comments from "../components/Comments";
-import ReadMore from "../components/ReadMore";
 import SocialShare from "../components/SocialShare";
 import MoonLoader from "../components/common/MoonLoader";
 import Navbar from "../components/layout/Navbar";
+import ReadMore from "../components/sections/ReadMore";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../utils/axios";
 import convertTimestampToFormat from "../utils/convertTimestampToText";
@@ -174,7 +174,7 @@ const Story = () => {
               </div>
               <Comments storyId={id} userId={userId}></Comments>
             </div>
-            <ReadMore></ReadMore>
+            <ReadMore currentStoryId  = {id}></ReadMore>
           </div>
         </>
       )}

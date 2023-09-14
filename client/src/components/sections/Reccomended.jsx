@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import tick from "../assets/images/tick.svg";
-import tick2 from "../assets/images/tick2.svg";
-import axios from "../utils/axios";
+import axios from "../../utils/axios";
 import Discover from "./Discover";
-import ReccomendedCard from "./cards/ReccomendedCard";
+import tick from "../../assets/images/tick.svg";
+import tick2 from "../../assets/images/tick2.svg";
+import ReccomendedCard from "../cards/ReccomendedCard";
 const Reccomended = () => {
   const [reccomended, setReccomended] = useState([]);
 
@@ -21,7 +21,7 @@ const Reccomended = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between reccomended">
+    <section className="flex flex-col lg:flex-row justify-between reccomended">
       {reccomended && (
         <div className="flex w-[100%] md:w-[90%] flex-col gap-3 lg:gap-8 py-10 px-5 md:px-20 border border-[#e5e7eb]">
           <p className="flex items-center justify-start text-sm md:text-md font-medium gap-1">
@@ -44,7 +44,7 @@ const Reccomended = () => {
         </div>
       )}
       <Discover></Discover>
-    </div>
+    </section>
   );
 };
 

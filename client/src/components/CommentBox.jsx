@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Button from "./common/Button";
-
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 const CommentBox = ({ saveComment }) => {
+  const { isLoggedIn } = useContext(AuthContext);
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (e) => {
@@ -10,6 +12,7 @@ const CommentBox = ({ saveComment }) => {
   };
 
   const handleCommentSubmit = () => {
+    if (!isLoggedIn) return toast.error("You must be logged in");
     toast.promise(saveComment(comment), {
       loading: "Commenting...",
       success: () => {

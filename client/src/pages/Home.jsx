@@ -1,9 +1,9 @@
 import laptopUser from "../assets/images/cc.svg";
 import Button from "../components/common/Button";
 import Footer from "../components/layout/Footer";
-import LatestStories from "../components/LatestStories";
 import Navbar from "../components/layout/Navbar";
-import Reccomended from "../components/Reccomended";
+import LatestStories from "../components/sections/LatestStories";
+import Reccomended from "../components/sections/Reccomended";
 
 const Home = () => {
   const scrollToReccomended = () => {

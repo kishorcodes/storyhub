@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "../utils/axios";
-import ReadMoreCard from "./cards/ReadMoreCard";
-const ReadMore = () => {
+import axios from "../../utils/axios";
+import ReadMoreCard from "../cards/ReadMoreCard";
+const ReadMore = ({ currentStoryId }) => {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const ReadMore = () => {
   return (
     <>
       {stories ? (
-        <div className="sticky top-0 border-t border-cyan hidden lg:flex flex-col justify-start items-center w-[370px] h-[100%]">
+        <aside className="sticky top-0 border-t border-cyan hidden lg:flex flex-col justify-start items-center w-[370px] h-[100%]">
           <div className="border-b border-cyan relative px-1 flex w-[100%] h-[180px] flex-col items-center justify-center">
             <button
               type="button"
@@ -35,9 +35,11 @@ const ReadMore = () => {
             </h1>
           </div>
           {stories.map((story, index) => {
-            return <ReadMoreCard story={story} key={index} />;
+            return story._id !== currentStoryId ? (
+              <ReadMoreCard story={story} key={index} />
+            ) : null;
           })}
-        </div>
+        </aside>
       ) : null}
     </>
   );

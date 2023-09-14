@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import arrow from "../assets/images/diagonal_arrow.svg";
-import axios from "../utils/axios";
-import LatestStoryCard from "./cards/LatestStoryCard";
+import arrow from "../../assets/images/diagonal_arrow.svg";
+import axios from "../../utils/axios";
+import LatestStoryCard from "../cards/LatestStoryCard";
 
 const LatestStories = () => {
   const [latestStories, setLatestStories] = useState([]);
@@ -20,7 +20,7 @@ const LatestStories = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 px-5 md:px-20 pt-16 pb-10">
+    <section className="flex flex-col gap-6 px-5 md:px-20 pt-16 pb-10">
       {latestStories.length > 0 && (
         <p className="flex items-center justify-start text-sm md:text-md font-medium gap-1">
           <img
@@ -37,7 +37,7 @@ const LatestStories = () => {
           <LatestStoryCard key={story._id} story={story} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

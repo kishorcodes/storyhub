@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
-import Button from "./common/Button";
-import Logo from "./common/Logo";
+import Button from "../common/Button";
+import Logo from "../common/Logo";
 const Submitbar = ({ setPublishMode }) => {
   const handlePublishClick = () => {
     setPublishMode(true);
@@ -24,6 +24,6 @@ const Submitbar = ({ setPublishMode }) => {
       )}
     </Disclosure>
   );
-}
+};
 
-export default Submitbar
+export default Submitbar;

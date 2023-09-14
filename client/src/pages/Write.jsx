@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import MarkdownEditor from "../components/MarkdownEditor";
 import Publish from "../components/Publish";
-import Submitbar from "../components/Submitbar";
+import Submitbar from "../components/layout/Submitbar";
 import MoonLoader from "../components/common/MoonLoader";
 const Write = () => {
   
