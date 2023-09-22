@@ -19,7 +19,7 @@ const Logo = ({ color }) => {
           <h1
             className={`font-medium lg:font-semibold ml-1 text-${color} text-md lg:text-lg`}
           >
-           TELLWORLD
+           STORYLINK
           </h1>
         </div>
       </div>

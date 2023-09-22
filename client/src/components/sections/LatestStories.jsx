@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import arrow from "../../assets/images/diagonal_arrow.svg";
 import axios from "../../utils/axios";
 import LatestStoryCard from "../cards/LatestStoryCard";
+import { stories } from "../../utils/data";
 
 const LatestStories = () => {
   const [latestStories, setLatestStories] = useState([]);
@@ -10,7 +11,7 @@ const LatestStories = () => {
     const fetchLatestStories = async () => {
       try {
         const response = await axios.get("/api/stories/latest");
-        setLatestStories(response.data.data);
+        setLatestStories(response?.data?.data || stories);
       } catch (err) {
         console.log(err);
       }
