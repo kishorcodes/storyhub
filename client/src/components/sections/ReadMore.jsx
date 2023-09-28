@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 import ReadMoreCard from "../cards/ReadMoreCard";
+import { stories as defaultStories } from "../../utils/data";
 const ReadMore = ({ currentStoryId }) => {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
     const fetchAllStories = async () => {
+      if(!stories) setStories(defaultStories)
       try {
         const response = await axios.get("/api/stories/latest");
-        setStories(response.data.data);
+        setStories(response?.data?.data);
       } catch (err) {
         console.log(err);
       }

@@ -9,9 +9,10 @@ const LatestStories = () => {
 
   useEffect(() => {
     const fetchLatestStories = async () => {
+      if (!latestStories) setLatestStories(stories);
       try {
         const response = await axios.get("/api/stories/latest");
-        setLatestStories(response?.data?.data || stories);
+        setLatestStories(response?.data?.data);
       } catch (err) {
         console.log(err);
       }

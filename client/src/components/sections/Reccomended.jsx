@@ -4,11 +4,13 @@ import Discover from "./Discover";
 import tick from "../../assets/images/tick.svg";
 import tick2 from "../../assets/images/tick2.svg";
 import ReccomendedCard from "../cards/ReccomendedCard";
+import { stories } from "../../utils/data";
 const Reccomended = () => {
   const [reccomended, setReccomended] = useState([]);
 
   useEffect(() => {
     const fetchAllStories = async () => {
+      if(!reccomended) setReccomended(stories)
       try {
         const response = await axios.get("/api/stories/latest");
         setReccomended(response.data.data);
